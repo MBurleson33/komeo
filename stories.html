@@ -160,6 +160,9 @@
     <div class="stories-grid" id="storiesGrid">
       <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Loading stories…</div>
     </div>
+    <div style="text-align:center;margin-top:3rem;">
+      <button id="loadMoreBtn" onclick="loadStories()" style="display:none;background:var(--deep);color:#fff;border:none;padding:0.9rem 2.25rem;border-radius:40px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.2s;" onmouseover="this.style.background='#0f1e29'" onmouseout="this.style.background='var(--deep)'">Load More Stories</button>
+    </div>
   </div>
 
   <!-- SHARE YOUR STORY -->
@@ -202,22 +205,91 @@
     const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
     const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
 
+    const PAGE_SIZE = 6;
+    let offset = 0;
+    let featuredId = null;
+    let loading = false;
+
+    function storyCardHTML(r) {
+      const url = r.slug ? `story.html?slug=${encodeURIComponent(r.slug)}` : '#';
+      const date = r.published_at ? new Date(r.published_at).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
+      return `
+        <a href="${url}" class="story-card">
+          <div class="story-img">
+            ${r.image_url ? `<img src="${r.image_url}" alt="${r.title}" loading="lazy" />` : `<div style="background:var(--sand);width:100%;height:100%;"></div>`}
+          </div>
+          <div class="story-tag">${r.category || 'Ministry Update'}</div>
+          <div class="story-title">${r.title}</div>
+          <div class="story-meta">${r.author}${date ? ' · ' + date : ''}</div>
+        </a>`;
+    }
+
     async function loadStories() {
+      if (loading) return;
+      loading = true;
+
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      if (loadMoreBtn) loadMoreBtn.textContent = 'Loading…';
+
+      try {
+        // Build query — exclude featured story, paginate the rest
+        let query = `published=eq.true&order=published_at.desc&limit=${PAGE_SIZE}&offset=${offset}`;
+        if (featuredId) query += `&id=neq.${featuredId}`;
+
+        const res = await fetch(`${SB}/rest/v1/komeo_stories?${query}`, {
+          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}`, 'Prefer': 'count=exact' }
+        });
+
+        const total = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
+        const rows = await res.json();
+        const grid = document.getElementById('storiesGrid');
+
+        if (!rows.length && offset === 0) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">No stories yet.</div>';
+          return;
+        }
+
+        // Append cards
+        rows.forEach(r => {
+          grid.insertAdjacentHTML('beforeend', storyCardHTML(r));
+        });
+
+        offset += rows.length;
+
+        // Show/hide load more button
+        const shown = offset;
+        const remaining = total - shown;
+
+        if (loadMoreBtn) {
+          if (remaining > 0) {
+            loadMoreBtn.textContent = `Load More Stories (${remaining} more)`;
+            loadMoreBtn.style.display = 'inline-block';
+          } else {
+            loadMoreBtn.style.display = 'none';
+          }
+        }
+
+      } catch(e) {
+        console.warn('Stories load failed', e);
+        if (offset === 0) {
+          document.getElementById('storiesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Stories unavailable right now.</div>';
+        }
+      } finally {
+        loading = false;
+      }
+    }
+
+    async function loadFeatured() {
       try {
         const res = await fetch(`${SB}/rest/v1/komeo_stories?published=eq.true&order=published_at.desc`, {
           headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
         });
         const rows = await res.json();
-        if (!rows.length) {
-          document.getElementById('storiesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">No stories yet.</div>';
-          return;
-        }
+        if (!rows.length) return;
 
-        // Featured story (first one marked featured, or just first)
         const featured = rows.find(r => r.featured) || rows[0];
-        const rest = rows.filter(r => r.id !== featured.id);
+        featuredId = featured.id;
 
-        // Render featured
         const featuredSection = document.getElementById('featuredSection');
         const featuredCard = document.getElementById('featuredCard');
         featuredSection.style.display = 'block';
@@ -235,32 +307,16 @@
             <a href="${featuredUrl}" class="btn-sky">Read Story</a>
           </div>`;
 
-        // Render rest
-        if (!rest.length) {
-          document.getElementById('storiesSection').style.display = 'none';
-          return;
-        }
-        document.getElementById('storiesGrid').innerHTML = rest.map(r => {
-          const url = r.slug ? `story.html?slug=${encodeURIComponent(r.slug)}` : '#';
-          const date = r.published_at ? new Date(r.published_at).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
-          return `
-            <a href="${url}" class="story-card">
-              <div class="story-img">
-                ${r.image_url ? `<img src="${r.image_url}" alt="${r.title}" loading="lazy" />` : `<div style="background:var(--sand);width:100%;height:100%;"></div>`}
-              </div>
-              <div class="story-tag">${r.category || 'Ministry Update'}</div>
-              <div class="story-title">${r.title}</div>
-              <div class="story-meta">${r.author}${date ? ' · ' + date : ''}</div>
-            </a>`;
-        }).join('');
+        // Now load first page of remaining stories
+        loadStories();
 
       } catch(e) {
-        document.getElementById('storiesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Stories unavailable right now.</div>';
-        console.warn('Stories load failed', e);
+        console.warn('Featured load failed', e);
+        loadStories();
       }
     }
 
-    loadStories();
+    loadFeatured();
   </script>
   <script src="/admin-trigger.js"></script>
 </body>
