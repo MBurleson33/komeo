@@ -120,8 +120,7 @@
       });
 
       if (res.ok) {
-        const { token } = await res.json();
-        sessionStorage.setItem('komeo_admin', token);
+        sessionStorage.setItem('komeo_admin', 'authenticated');
         window.location.href = '/admin.html';
       } else {
         errEl.style.display = 'block';
@@ -160,9 +159,12 @@
     }
   });
 
-  // Auto-open admin.html if already authenticated
-  window.addEventListener('DOMContentLoaded', () => {
-    document.body.setAttribute('tabindex', '-1');
-    document.body.focus();
+  // Ensure page has focus for keydown events
+  window.addEventListener('load', () => {
+    // Only grab focus if nothing else is focused
+    if (!document.activeElement || document.activeElement === document.body) {
+      document.body.setAttribute('tabindex', '-1');
+      document.body.focus({ preventScroll: true });
+    }
   });
 })();
