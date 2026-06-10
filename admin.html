@@ -599,32 +599,10 @@
     location.reload();
   }
 
-  // ── KEYSTROKE TRIGGER ──
-  // Type "admin" anywhere on the page to reveal the login box
-  let keyBuffer = '';
-  document.addEventListener('keydown', (e) => {
-    // Don't fire if already in an input field
-    if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
-    keyBuffer += e.key.toLowerCase();
-    if (keyBuffer.length > 5) keyBuffer = keyBuffer.slice(-5);
-    if (keyBuffer.endsWith('admin')) {
-      const ls = document.getElementById('loginScreen');
-      ls.classList.add('visible');
-      setTimeout(() => document.getElementById('passwordInput').focus(), 50);
-      keyBuffer = '';
-    }
-  });
-
-  // Close login on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.getElementById('loginScreen').classList.remove('visible');
-    }
-  });
-
   window.addEventListener('DOMContentLoaded', () => {
     const stored = sessionStorage.getItem('komeo_admin');
     if (stored && stored.length > 10) {
+      document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminApp').style.display = 'block';
       loadDashboard();
     }
