@@ -621,7 +621,7 @@
       });
       if (res.ok) {
 
-        sessionStorage.setItem('komeo_admin', 'authenticated');
+        localStorage.setItem('komeo_admin', 'authenticated');
         document.getElementById('loginScreen').classList.remove('visible');
         document.getElementById('adminApp').style.display = 'block';
         loadDashboard();
@@ -635,12 +635,12 @@
   }
 
   function logout() {
-    sessionStorage.removeItem('komeo_admin');
+    localStorage.removeItem('komeo_admin');
     location.reload();
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    const stored = sessionStorage.getItem('komeo_admin');
+    const stored = localStorage.getItem('komeo_admin');
     if (stored && stored.length > 0) {
       document.getElementById('adminApp').style.display = 'block';
       loadDashboard();
