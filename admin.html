@@ -444,6 +444,11 @@
       </div>
     </div>
     <div class="field"><label>Excerpt</label><textarea id="storyExcerpt" rows="2" placeholder="Short summary shown on the stories page…"></textarea></div>
+    <div class="field">
+      <label>Full Story Content</label>
+      <textarea id="storyContent" rows="14" placeholder="Write the full story here. You can use plain text (double line break = new paragraph) or basic HTML tags like &lt;h2&gt;, &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;img&gt;…"></textarea>
+      <span class="field-hint">Plain text: double line break = new paragraph. Or paste HTML for richer formatting.</span>
+    </div>
     <div class="field"><label>Image URL</label><input type="text" id="storyImage" placeholder="images/IMG_1234.webp or https://…" /></div>
     <div class="field"><label>External URL</label><input type="text" id="storyExternal" placeholder="https://www.komeo.org/stories/… (leave blank for internal)" /><span class="field-hint">If the full story lives on the old Squarespace site, paste that URL here.</span></div>
     <div class="form-row">
@@ -702,9 +707,11 @@
     document.getElementById('storyExcerpt').value = r?.excerpt || '';
     document.getElementById('storyImage').value = r?.image_url || '';
     document.getElementById('storyExternal').value = r?.external_url || '';
+    document.getElementById('storyContent').value = r?.content || '';
     document.getElementById('storyDate').value = r?.published_at ? r.published_at.split('T')[0] : new Date().toISOString().split('T')[0];
     document.getElementById('storyPublished').checked = r ? r.published : true;
     document.getElementById('storyFeatured').checked = r?.featured || false;
+    if (!r) document.getElementById('storyContent').value = '';
     openModal('storyModal');
   }
 
@@ -723,6 +730,7 @@
       excerpt: document.getElementById('storyExcerpt').value.trim(),
       image_url: document.getElementById('storyImage').value.trim(),
       external_url: document.getElementById('storyExternal').value.trim(),
+      content: document.getElementById('storyContent').value.trim(),
       published_at: document.getElementById('storyDate').value,
       published: document.getElementById('storyPublished').checked,
       featured: document.getElementById('storyFeatured').checked,
