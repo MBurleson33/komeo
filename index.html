@@ -944,7 +944,7 @@
   <!-- NAV -->
   <nav id="mainNav">
     <a href="index.html" class="nav-logo">
-      <img src="https://images.squarespace-cdn.com/content/v1/631f9189807cc466fca2a158/f292617d-092a-40c7-8ae4-85349ccd344f/Komeo_Logo_White.png?format=300w" alt="Komeo International Ministries" />
+      <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
     </a>
 
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -1000,23 +1000,11 @@
 
   <!-- STATS BAR -->
   <div class="stats-bar">
-    <div class="stats-inner">
-      <div>
-        <div class="stat-num">150+</div>
-        <div class="stat-label">Children in our care</div>
-      </div>
-      <div>
-        <div class="stat-num">2</div>
-        <div class="stat-label">Orphanages in Sierra Leone</div>
-      </div>
-      <div>
-        <div class="stat-num">14+</div>
-        <div class="stat-label">Years of ministry</div>
-      </div>
-      <div>
-        <div class="stat-num">100s</div>
-        <div class="stat-label">Families transformed</div>
-      </div>
+    <div class="stats-inner" id="statsBar">
+      <div><div class="stat-num">150+</div><div class="stat-label">Children in our care</div></div>
+      <div><div class="stat-num">2</div><div class="stat-label">Orphanages in Sierra Leone</div></div>
+      <div><div class="stat-num">14+</div><div class="stat-label">Years of ministry</div></div>
+      <div><div class="stat-num">100s</div><div class="stat-label">Families transformed</div></div>
     </div>
   </div>
 
@@ -1162,28 +1150,8 @@
         <a href="stories.html" class="card-link" style="font-size: 0.9rem;">All stories</a>
       </div>
 
-      <div class="testimonial-grid">
-        <div class="testimonial-card">
-          <p>"I first started writing my sweet sponsored daughter, Martha, about 11 years ago. I was blessed to meet her not long after that and started sponsoring her. I've enjoyed watching her grow into a wonderful young woman! She went to University and now has a job working in another orphanage. So proud to call her daughter!"</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">AG</div>
-            <div>
-              <div class="author-name">Amy Grant</div>
-              <div class="author-role">Longtime Sponsor &amp; Board Member</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <p>"About 12 years ago, we started sponsoring Tabitha as she was growing up in the Wellington orphanage. We have had the opportunity to communicate with her regularly through WhatsApp over the years. We were even able to get her through college as one of the first women to graduate from college in Sierra Leone!"</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">TS</div>
-            <div>
-              <div class="author-name">A Sponsor Family</div>
-              <div class="author-role">Sponsoring Tabitha for 12+ years</div>
-            </div>
-          </div>
-        </div>
+      <div class="testimonial-grid" id="testimonialsGrid">
+        <!-- loaded from Supabase -->
       </div>
     </div>
   </section>
@@ -1286,5 +1254,56 @@
     });
   </script>
 
+
+  <script>
+    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
+
+    async function sbGet(table, query = '') {
+      const res = await fetch(`${SB}/rest/v1/${table}?${query}`, {
+        headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+      });
+      return res.json();
+    }
+
+    // Load stats
+    async function loadStats() {
+      try {
+        const rows = await sbGet('komeo_stats', 'order=sort_order.asc');
+        if (!rows.length) return;
+        document.getElementById('statsBar').innerHTML = rows.map(r => `
+          <div>
+            <div class="stat-num">${r.value}</div>
+            <div class="stat-label">${r.label}</div>
+          </div>`).join('');
+      } catch(e) { console.warn('Stats load failed', e); }
+    }
+
+    // Load testimonials
+    async function loadTestimonials() {
+      try {
+        const rows = await sbGet('komeo_testimonials', 'published=eq.true&order=sort_order.asc');
+        if (!rows.length) return;
+        document.getElementById('testimonialsGrid').innerHTML = rows.map(r => `
+          <div class="testimonial-card">
+            <p>"${r.quote}"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="${r.image_url ? `background:transparent;padding:0;overflow:hidden;` : ''}">
+                ${r.image_url
+                  ? `<img src="${r.image_url}" alt="${r.author_name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`
+                  : (r.author_initials || r.author_name.split(' ').map(n=>n[0]).join('').slice(0,2))}
+              </div>
+              <div>
+                <div class="author-name">${r.author_name}</div>
+                <div class="author-role">${r.author_role || ''}</div>
+              </div>
+            </div>
+          </div>`).join('');
+      } catch(e) { console.warn('Testimonials load failed', e); }
+    }
+
+    loadStats();
+    loadTestimonials();
+  </script>
 </body>
 </html>
