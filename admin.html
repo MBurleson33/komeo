@@ -562,18 +562,31 @@
 <script>
   const SB_URL  = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
   const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
-  const ADMIN_PASS = 'komeo2025';
+
 
   // ── AUTH ──
-  function login() {
+  async function login() {
     const pw = document.getElementById('passwordInput').value;
-    if (pw === ADMIN_PASS) {
-      sessionStorage.setItem('komeo_admin', '1');
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('adminApp').style.display = 'block';
-      loadDashboard();
-    } else {
-      document.getElementById('loginError').style.display = 'block';
+    const errEl = document.getElementById('loginError');
+    errEl.style.display = 'none';
+    try {
+      const res = await fetch('/api/admin-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw }),
+      });
+      if (res.ok) {
+        const { token } = await res.json();
+        sessionStorage.setItem('komeo_admin', token);
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminApp').style.display = 'block';
+        loadDashboard();
+      } else {
+        errEl.style.display = 'block';
+      }
+    } catch (e) {
+      errEl.textContent = 'Network error. Please try again.';
+      errEl.style.display = 'block';
     }
   }
 
@@ -583,7 +596,8 @@
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    if (sessionStorage.getItem('komeo_admin') === '1') {
+    const stored = sessionStorage.getItem('komeo_admin');
+    if (stored && stored.length > 10) {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminApp').style.display = 'block';
       loadDashboard();
