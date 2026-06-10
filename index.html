@@ -1481,12 +1481,14 @@
 
   <script>
     (function() {
-      if (!localStorage.getItem('komeo_cookie_ok')) {
+      const WEEK = 7 * 24 * 60 * 60 * 1000;
+      const last = localStorage.getItem('komeo_cookie_ok');
+      if (!last || (Date.now() - parseInt(last)) > WEEK) {
         document.getElementById('cookieNotice').style.display = 'flex';
       }
     })();
     function dismissCookie() {
-      localStorage.setItem('komeo_cookie_ok', '1');
+      localStorage.setItem('komeo_cookie_ok', Date.now().toString());
       const el = document.getElementById('cookieNotice');
       el.style.opacity = '0';
       el.style.transition = 'opacity 0.3s';
