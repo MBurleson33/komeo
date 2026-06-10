@@ -22,6 +22,7 @@
     #loginScreen {
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
       background: var(--deep);
+      position: fixed; inset: 0; z-index: 999;
     }
     .login-box {
       background: var(--white); border-radius: 10px; padding: 2.5rem;
@@ -204,8 +205,8 @@
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen">
+<!-- LOGIN (hidden — triggered by typing "admin") -->
+<div id="loginScreen" style="display:none;">
   <div class="login-box">
     <img src="images/Komeo_Logo_White.webp" alt="Komeo" style="filter:invert(1) brightness(0.3) sepia(1) hue-rotate(170deg) saturate(3);" />
     <h2>Admin Panel</h2>
@@ -298,7 +299,7 @@
             <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">Home Page ↗</a>
             <a href="stories.html" target="_blank" class="btn btn-ghost btn-sm">Stories ↗</a>
             <a href="building-project.html" target="_blank" class="btn btn-ghost btn-sm">Building Project ↗</a>
-            <a href="https://supabase.com/dashboard/project/mnyarbqxyynysoqiwtnh" target="_blank" class="btn btn-ghost btn-sm">Supabase ↗</a>
+
           </div>
         </div>
       </div>
@@ -594,6 +595,32 @@
     sessionStorage.removeItem('komeo_admin');
     location.reload();
   }
+
+  // ── KEYSTROKE TRIGGER ──
+  // Type "admin" anywhere on the page to reveal the login box
+  let keyBuffer = '';
+  document.addEventListener('keydown', (e) => {
+    // Don't fire if already in an input field
+    if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+    keyBuffer += e.key.toLowerCase();
+    if (keyBuffer.length > 5) keyBuffer = keyBuffer.slice(-5);
+    if (keyBuffer.endsWith('admin')) {
+      const ls = document.getElementById('loginScreen');
+      if (ls.style.display === 'none' || ls.style.display === '') {
+        ls.style.display = 'flex';
+        setTimeout(() => document.getElementById('passwordInput').focus(), 50);
+      }
+      keyBuffer = '';
+    }
+  });
+
+  // Close login on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const ls = document.getElementById('loginScreen');
+      if (ls.style.display === 'flex') ls.style.display = 'none';
+    }
+  });
 
   window.addEventListener('DOMContentLoaded', () => {
     const stored = sessionStorage.getItem('komeo_admin');
