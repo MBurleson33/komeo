@@ -356,28 +356,9 @@
       <a href="https://komeo.managedmissions.com/OurTrips" target="_blank" rel="noopener" class="btn-primary">Apply for a Mission Team</a>
     </div>
 
-    <div class="trip-dates">
-      <div class="trip-card">
-        <div class="trip-month">Mar</div>
-        <div class="trip-info">
-          <h4>Spring Trip</h4>
-          <p>Orphanage ministry, village outreach, and evangelism in the surrounding communities.</p>
-        </div>
-      </div>
-      <div class="trip-card">
-        <div class="trip-month">Jul</div>
-        <div class="trip-info">
-          <h4>Summer Trip</h4>
-          <p>Includes a teen/young adult team option for participants ages 14 and up.</p>
-        </div>
-      </div>
-      <div class="trip-card">
-        <div class="trip-month">Nov</div>
-        <div class="trip-info">
-          <h4>Fall Trip</h4>
-          <p>Deep community relationships and focused discipleship with orphanage children.</p>
-        </div>
-      </div>
+    <div class="trip-dates" id="tripDates">
+      <!-- loaded from Supabase -->
+      <div class="trip-card"><div class="trip-month" style="opacity:0.3">…</div><div class="trip-info"><h4>Loading trips…</h4></div></div>
     </div>
   </div>
 
@@ -561,6 +542,31 @@
         if (!wasOpen) item.classList.add('open');
       });
     });
+  </script>
+
+  <script>
+    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
+
+    async function loadTrips() {
+      try {
+        const res = await fetch(`${SB}/rest/v1/komeo_trips?published=eq.true&order=sort_order.asc`, {
+          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+        });
+        const rows = await res.json();
+        if (!rows.length) return;
+        document.getElementById('tripDates').innerHTML = rows.map(r => `
+          <div class="trip-card">
+            <div class="trip-month">${r.month_label}${r.year ? '<span style="font-size:0.9rem;display:block;opacity:0.7">' + r.year + '</span>' : ''}</div>
+            <div class="trip-info">
+              <h4>${r.season}</h4>
+              <p>${r.description || ''}</p>
+            </div>
+          </div>`).join('');
+      } catch(e) { console.warn('Trips load failed', e); }
+    }
+
+    loadTrips();
   </script>
 </body>
 </html>
