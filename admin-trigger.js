@@ -120,7 +120,7 @@
       });
 
       if (res.ok) {
-        sessionStorage.setItem('komeo_admin', 'authenticated');
+        localStorage.setItem('komeo_admin', 'authenticated');
         window.location.href = '/admin.html';
       } else {
         errEl.style.display = 'block';
