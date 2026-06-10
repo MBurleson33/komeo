@@ -20,9 +20,12 @@
 
     /* LOGIN */
     #loginScreen {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; display: none; align-items: center; justify-content: center;
       background: var(--deep);
       position: fixed; inset: 0; z-index: 999;
+    }
+    #loginScreen.visible {
+      display: flex;
     }
     .login-box {
       background: var(--white); border-radius: 10px; padding: 2.5rem;
@@ -206,7 +209,7 @@
 <body>
 
 <!-- LOGIN (hidden — triggered by typing "admin") -->
-<div id="loginScreen" style="display:none;">
+<div id="loginScreen">
   <div class="login-box">
     <img src="images/Komeo_Logo_White.webp" alt="Komeo" style="filter:invert(1) brightness(0.3) sepia(1) hue-rotate(170deg) saturate(3);" />
     <h2>Admin Panel</h2>
@@ -579,7 +582,7 @@
       if (res.ok) {
         const { token } = await res.json();
         sessionStorage.setItem('komeo_admin', token);
-        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('loginScreen').classList.remove('visible');
         document.getElementById('adminApp').style.display = 'block';
         loadDashboard();
       } else {
@@ -606,10 +609,8 @@
     if (keyBuffer.length > 5) keyBuffer = keyBuffer.slice(-5);
     if (keyBuffer.endsWith('admin')) {
       const ls = document.getElementById('loginScreen');
-      if (ls.style.display === 'none' || ls.style.display === '') {
-        ls.style.display = 'flex';
-        setTimeout(() => document.getElementById('passwordInput').focus(), 50);
-      }
+      ls.classList.add('visible');
+      setTimeout(() => document.getElementById('passwordInput').focus(), 50);
       keyBuffer = '';
     }
   });
@@ -617,15 +618,13 @@
   // Close login on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      const ls = document.getElementById('loginScreen');
-      if (ls.style.display === 'flex') ls.style.display = 'none';
+      document.getElementById('loginScreen').classList.remove('visible');
     }
   });
 
   window.addEventListener('DOMContentLoaded', () => {
     const stored = sessionStorage.getItem('komeo_admin');
     if (stored && stored.length > 10) {
-      document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminApp').style.display = 'block';
       loadDashboard();
     }
