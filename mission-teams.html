@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Teams — Komeo International Ministries</title>
+  <meta name="description" content="Join a Komeo mission team to Sierra Leone — serving orphans, sharing the Gospel, and experiencing life-changing ministry three times a year." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sky: #3B8DC8; --sky-dark: #2A6FA0; --deep: #1A2E3B;
+      --sand: #F5EFE6; --lime: #7AB648; --lime-dark: #5E9234;
+      --white: #ffffff; --text: #1A2E3B; --muted: #5A6E7A;
+      --border: rgba(26,46,59,0.12); --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: var(--sky); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 100; transition: background 0.3s; }
+    nav.scrolled { background: var(--deep); box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; padding: 0.4rem 0.75rem; border-radius: 4px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; opacity: 0.7; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--deep); border-radius: 6px; overflow: hidden; min-width: 180px; box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a { display: block; color: rgba(255,255,255,0.85) !important; font-size: 0.82rem !important; padding: 0.6rem 1rem !important; border-radius: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover { background: rgba(255,255,255,0.08) !important; color: #fff !important; }
+    .nav-give { background: var(--lime) !important; color: #fff !important; padding: 0.45rem 1.2rem !important; border-radius: 40px !important; font-weight: 600 !important; letter-spacing: 0.06em !important; }
+    .nav-give:hover { background: var(--lime-dark) !important; }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative;
+      height: 56vh;
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('images/IMG_2007+2.webp');
+      background-size: cover;
+      background-position: center 35%;
+      filter: brightness(0.45);
+    }
+    .page-hero-content {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1200px;
+      margin: 0 auto; padding: 0 2.5rem 3.5rem;
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.85); }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 0.75rem; }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.75); max-width: 540px; line-height: 1.65; font-weight: 300; }
+
+    /* INTRO SECTION */
+    .intro-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5.5rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .intro-text .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sky); margin-bottom: 0.75rem; }
+    .intro-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: var(--deep); margin-bottom: 1.25rem; line-height: 1.2; }
+    .intro-text p { font-size: 1.02rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
+
+    .btn-primary {
+      display: inline-block; background: var(--lime); color: #fff;
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      letter-spacing: 0.04em; padding: 0.9rem 2rem; border-radius: 40px;
+      transition: background 0.2s, transform 0.15s; margin-top: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--lime-dark); transform: translateY(-1px); }
+
+    /* TRIP DATES */
+    .trip-dates {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .trip-card {
+      background: var(--sand);
+      border-radius: 6px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border-left: 4px solid var(--sky);
+    }
+
+    .trip-month {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--sky);
+      line-height: 1;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .trip-info h4 { font-weight: 600; font-size: 1rem; color: var(--deep); margin-bottom: 0.2rem; }
+    .trip-info p { font-size: 0.87rem; color: var(--muted); line-height: 1.5; }
+
+    /* PHOTO MOSAIC */
+    .photo-mosaic {
+      background: var(--deep);
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .mosaic-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .mosaic-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s;
+      filter: brightness(0.88);
+    }
+
+    .mosaic-img:hover img { transform: scale(1.04); filter: brightness(1); }
+
+    .mosaic-img.tall { aspect-ratio: 4/5; }
+
+    /* TESTIMONIAL */
+    .testimonial-section {
+      background: var(--sand);
+      padding: 6rem 2.5rem;
+    }
+
+    .testimonial-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial-inner .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sky); margin-bottom: 1.5rem; display: block; }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      font-style: italic;
+      color: var(--deep);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .author-photo {
+      width: 52px; height: 52px;
+      border-radius: 50%; overflow: hidden;
+      border: 3px solid var(--sky);
+    }
+
+    .author-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+
+    .author-name { font-weight: 600; font-size: 0.95rem; color: var(--deep); }
+    .author-role { font-size: 0.8rem; color: var(--muted); }
+
+    /* FAQ */
+    .faq-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 5.5rem 2.5rem 6rem;
+    }
+
+    .faq-header { text-align: center; margin-bottom: 3.5rem; }
+    .faq-header .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sky); margin-bottom: 0.75rem; }
+    .faq-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--deep); }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 0;
+      cursor: pointer;
+      gap: 1rem;
+    }
+
+    .faq-question h4 {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--deep);
+      line-height: 1.4;
+    }
+
+    .faq-icon {
+      width: 28px; height: 28px; min-width: 28px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--sky);
+      transition: transform 0.3s, border-color 0.2s;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); border-color: var(--sky); }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 1.5rem;
+    }
+
+    .faq-item.open .faq-answer { display: block; }
+
+    .faq-answer p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .faq-answer a { color: var(--sky); text-decoration: underline; }
+
+    /* CTA */
+    .cta-band { background: var(--sky); padding: 4.5rem 2.5rem; text-align: center; }
+    .cta-band h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); color: #fff; margin-bottom: 0.85rem; }
+    .cta-band p { font-size: 1rem; color: rgba(255,255,255,0.8); max-width: 480px; margin: 0 auto 2rem; line-height: 1.65; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white { display: inline-block; background: #fff; color: var(--sky); text-decoration: none; font-size: 0.9rem; font-weight: 700; padding: 0.85rem 2rem; border-radius: 40px; transition: background 0.2s; }
+    .btn-white:hover { background: var(--sand); }
+    .btn-outline-white { display: inline-block; border: 2px solid rgba(255,255,255,0.6); color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 40px; transition: border-color 0.2s; }
+    .btn-outline-white:hover { border-color: #fff; }
+
+    /* FOOTER */
+    footer { background: var(--deep); padding: 4rem 2.5rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand img { height: 38px; width: auto; margin-bottom: 1rem; opacity: 0.9; }
+    .footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 280px; margin-bottom: 1.25rem; }
+    .footer-social { display: flex; gap: 0.75rem; }
+    .footer-social a { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+    .footer-social a:hover { border-color: var(--sky); background: rgba(59,141,200,0.15); }
+    .footer-social svg { width: 14px; height: 14px; fill: rgba(255,255,255,0.6); }
+    .footer-col h5 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a { font-size: 0.87rem; color: rgba(255,255,255,0.62); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+    .footer-contact { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-align: right; line-height: 1.6; }
+    .footer-contact a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+    .footer-contact a:hover { color: #fff; }
+
+    /* MOBILE */
+    @media (max-width: 960px) {
+      .intro-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      .photo-mosaic { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--deep); padding: 1.5rem; gap: 0.25rem; max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+      .nav-toggle { display: block; }
+      .dropdown-menu { position: static; box-shadow: none; background: rgba(255,255,255,0.06); border-radius: 4px; margin-top: 0.25rem; }
+      .nav-dropdown:hover .dropdown-menu { display: none; }
+      .nav-dropdown.open .dropdown-menu { display: block; }
+      .page-hero-content { padding: 0 1.5rem 2.5rem; }
+      .faq-section { padding: 4rem 1.5rem 5rem; }
+    }
+    @media (max-width: 540px) {
+      .photo-mosaic { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="return false;">About</a>
+        <div class="dropdown-menu">
+          <a href="our-beginnings.html">Our Beginnings</a>
+          <a href="meet-the-team.html">Meet the Team</a>
+          <a href="our-beliefs.html">Our Beliefs</a>
+        </div>
+      </li>
+      <li><a href="sponsor.html">Sponsor</a></li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="return false;">Get Involved</a>
+        <div class="dropdown-menu">
+          <a href="sponsorship.html">Sponsorship</a>
+          <a href="mission-teams.html">Mission Teams</a>
+          <a href="missionary-support.html">Missionary Support</a>
+          <a href="outreach-efforts.html">Outreach Efforts</a>
+          <a href="other-opportunities.html">Other Opportunities</a>
+        </div>
+      </li>
+      <li><a href="building-project.html">Building Project</a></li>
+      <li><a href="stories.html">Stories</a></li>
+      <li><a href="donor-portal.html">Donor Portal</a></li>
+      <li><a href="give.html" class="nav-give">Give</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a><span>/</span>
+        <span>Get Involved</span><span>/</span>
+        <span style="color:rgba(255,255,255,0.75)">Mission Teams</span>
+      </div>
+      <h1>Mission Teams</h1>
+      <p>Three trips a year. Life-changing ministry. Come serve the people of Sierra Leone.</p>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-section">
+    <div class="intro-text">
+      <p class="eyebrow">Short-Term Missions</p>
+      <h2>Experience the joy of serving in West Africa</h2>
+      <p>Our mission teams serve on short-term trips three times a year — typically in March, July, and November. Each team focuses on orphanage ministry, community outreach, and evangelism to local and remote villages across Sierra Leone.</p>
+      <p>Trips run 12–14 days and cost approximately $3,200–$3,400. We provide full training, fundraising resources, and support every step of the way.</p>
+      <a href="https://komeo.managedmissions.com/OurTrips" target="_blank" rel="noopener" class="btn-primary">Apply for a Mission Team</a>
+    </div>
+
+    <div class="trip-dates">
+      <div class="trip-card">
+        <div class="trip-month">Mar</div>
+        <div class="trip-info">
+          <h4>Spring Trip</h4>
+          <p>Orphanage ministry, village outreach, and evangelism in the surrounding communities.</p>
+        </div>
+      </div>
+      <div class="trip-card">
+        <div class="trip-month">Jul</div>
+        <div class="trip-info">
+          <h4>Summer Trip</h4>
+          <p>Includes a teen/young adult team option for participants ages 14 and up.</p>
+        </div>
+      </div>
+      <div class="trip-card">
+        <div class="trip-month">Nov</div>
+        <div class="trip-info">
+          <h4>Fall Trip</h4>
+          <p>Deep community relationships and focused discipleship with orphanage children.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO MOSAIC -->
+  <div class="photo-mosaic">
+    <div class="mosaic-img">
+      <img src="images/Website+Photos+-+Mission+Teams+Page-01.webp" alt="Mission team in Sierra Leone" loading="lazy" />
+    </div>
+    <div class="mosaic-img">
+      <img src="images/IMG_7196+12.webp" alt="Children at the orphanage" loading="lazy" />
+    </div>
+    <div class="mosaic-img">
+      <img src="images/unnamed+6a-3.webp" alt="Community outreach" loading="lazy" />
+    </div>
+  </div>
+
+  <!-- TESTIMONIAL -->
+  <div class="testimonial-section">
+    <div class="testimonial-inner">
+      <span class="eyebrow">From a Team Member</span>
+      <p class="testimonial-quote">"I gained an amazing understanding of what the important things in life truly are. Getting to serve the people of Sierra Leone and the precious kids at the orphanages impacted me in a way I couldn't have anticipated. I left Sierra Leone fulfilled and ready to say 'yes' to whatever He has for my life."</p>
+      <div class="testimonial-author">
+        <div class="author-photo">
+          <img src="images/Screenshot+2026-05-29+at+9.29.21+AM.webp" alt="Jasmyn Kline" loading="lazy" />
+        </div>
+        <div>
+          <div class="author-name">Jasmyn Kline</div>
+          <div class="author-role">Mission Team Member &amp; Missions Director</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-header">
+      <p class="eyebrow">Before You Apply</p>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h4>How much do I need to raise to serve on a team?</h4>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>Trips typically cost $3,200–$3,400 for a 12–14 day trip. The amount depends on team size and the focus of each trip. As you fundraise, we provide training and all the resources you'll need throughout the process.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h4>What is the minimum age requirement?</h4>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>We require team members to be 18 or older. However, we often send a Summer teen/young adult team where the minimum age is 14.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h4>Do I need vaccinations?</h4>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>To acquire a Sierra Leone visa, you must have a Yellow Fever vaccine. We also encourage you to visit the <a href="https://wwwnc.cdc.gov/travel/destinations/traveler/none/sierra-leone" target="_blank" rel="noopener">CDC website</a> and consult your doctor for other recommended vaccinations. As an organization, we do not require any vaccinations beyond Yellow Fever for the visa.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h4>Will I need to take medications?</h4>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>We require team members to take an anti-malarial medication. We strongly recommend consulting your doctor well in advance to choose the right option for you.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h4>What will we do on the trip?</h4>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>Every trip includes time at the orphanages loving on and ministering to the children, as well as community outreach and evangelism in local and remote villages. Specific activities vary by trip but always center on building relationships and sharing the Gospel.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h4>How do I apply?</h4>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>Click the "Apply for a Mission Team" button above or below to visit our trip management portal and submit your application. Our team will follow up with next steps.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Ready to say yes?</h2>
+    <p>A trip to Sierra Leone will change your life. Apply today and take the first step toward an unforgettable experience of service and faith.</p>
+    <div class="cta-buttons">
+      <a href="https://komeo.managedmissions.com/OurTrips" target="_blank" rel="noopener" class="btn-white">Apply for a Mission Team</a>
+      <a href="give.html" class="btn-outline-white">Support a Team Member</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
+          <p>Sharing the Gospel and demonstrating God's love by caring for orphans in Sierra Leone, West Africa since 2010.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/KomeoInternational" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://www.instagram.com/komeoministries/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <ul>
+            <li><a href="our-beginnings.html">Our Beginnings</a></li>
+            <li><a href="meet-the-team.html">Meet the Team</a></li>
+            <li><a href="our-beliefs.html">Our Beliefs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Get Involved</h5>
+          <ul>
+            <li><a href="sponsor.html">Sponsor a Child</a></li>
+            <li><a href="mission-teams.html">Mission Teams</a></li>
+            <li><a href="missionary-support.html">Missionary Support</a></li>
+            <li><a href="outreach-efforts.html">Outreach Efforts</a></li>
+            <li><a href="other-opportunities.html">Other Opportunities</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>More</h5>
+          <ul>
+            <li><a href="building-project.html">Building Project</a></li>
+            <li><a href="stories.html">Stories</a></li>
+            <li><a href="donor-portal.html">Donor Portal</a></li>
+            <li><a href="give.html">Give</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Komeo International Ministries. All rights reserved.</p>
+        <div class="footer-contact">
+          P.O. Box 21586, Oklahoma City, OK 73156<br>
+          <a href="tel:4056596802">405-659-6802</a> &nbsp;·&nbsp;
+          <a href="mailto:info@komeo.org">info@komeo.org</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    document.querySelectorAll('.nav-dropdown > a').forEach(a => {
+      a.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) { e.preventDefault(); this.closest('.nav-dropdown').classList.toggle('open'); }
+      });
+    });
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
