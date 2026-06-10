@@ -3,1041 +3,1308 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin — Komeo International Ministries</title>
+  <title>Komeo International Ministries</title>
+  <meta name="description" content="Sharing the Gospel and caring for orphans in Sierra Leone, West Africa through child sponsorship, mission teams, and community outreach." />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --sky: #3B8DC8; --sky-dark: #2A6FA0; --deep: #1A2E3B;
-      --sand: #F5EFE6; --lime: #7AB648; --lime-dark: #5E9234;
-      --white: #fff; --text: #1A2E3B; --muted: #5A6E7A;
-      --border: #e2e8f0; --danger: #e53e3e; --success: #38a169;
-      --bg: #f7f9fc;
+      --sky:   #3B8DC8;
+      --sky-dark: #2A6FA0;
+      --deep:  #1A2E3B;
+      --sand:  #F5EFE6;
+      --earth: #8B6F4E;
+      --lime:  #7AB648;
+      --lime-dark: #5E9234;
+      --white: #ffffff;
+      --text:  #1A2E3B;
+      --muted: #5A6E7A;
+      --border: rgba(26,46,59,0.12);
+      --nav-h: 72px;
     }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-    /* LOGIN */
-    #loginScreen {
-      min-height: 100vh; display: none; align-items: center; justify-content: center;
-      background: var(--deep);
-      position: fixed; inset: 0; z-index: 999;
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    #loginScreen.visible {
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--sky);
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 100;
+      transition: background 0.3s;
     }
-    .login-box {
-      background: var(--white); border-radius: 10px; padding: 2.5rem;
-      width: 100%; max-width: 380px; text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-    .login-box img { height: 36px; margin-bottom: 1.5rem; }
-    .login-box h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--deep); margin-bottom: 0.4rem; }
-    .login-box p { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
-    .login-box input {
-      width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border);
-      border-radius: 6px; font-size: 0.95rem; font-family: inherit;
-      margin-bottom: 1rem; outline: none; transition: border-color 0.2s;
-    }
-    .login-box input:focus { border-color: var(--sky); }
-    .login-box button {
-      width: 100%; padding: 0.85rem; background: var(--sky); color: #fff;
-      border: none; border-radius: 6px; font-size: 0.95rem; font-weight: 600;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .login-box button:hover { background: var(--sky-dark); }
-    #loginError { color: var(--danger); font-size: 0.82rem; margin-top: 0.75rem; display: none; }
 
-    /* LAYOUT */
-    #adminApp { display: none; min-height: 100vh; }
-
-    .admin-header {
-      background: var(--deep); color: #fff;
-      padding: 0 2rem; height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 50;
+    nav.scrolled {
+      background: var(--deep);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
     }
-    .admin-header-left { display: flex; align-items: center; gap: 1rem; }
-    .admin-header-left img { height: 30px; opacity: 0.9; }
-    .admin-header-left span { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
-    .admin-header button {
-      background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.7);
-      padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.82rem;
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+    /* Dropdown */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown > a::after {
+      content: ' ▾';
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: var(--deep);
+      border-radius: 6px;
+      overflow: hidden;
+      min-width: 180px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    }
+
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+
+    .dropdown-menu a {
+      display: block;
+      color: rgba(255,255,255,0.85) !important;
+      font-size: 0.82rem !important;
+      padding: 0.6rem 1rem !important;
+      border-radius: 0 !important;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover { background: rgba(255,255,255,0.08) !important; color: #fff !important; }
+
+    .nav-give {
+      background: var(--lime) !important;
+      color: #fff !important;
+      padding: 0.45rem 1.2rem !important;
+      border-radius: 40px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.06em !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-give:hover { background: var(--lime-dark) !important; }
+
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/banner+photo+8.19.23+cropped+2.webp');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      padding-top: var(--nav-h);
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--lime);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.85rem 2rem;
+      border-radius: 40px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--lime-dark); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.6);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 0.85rem 2rem;
+      border-radius: 40px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 1;
+      animation: bounce 2s infinite;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.4);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--deep);
+      padding: 2.5rem;
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--sky);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.4rem;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 2.5rem; }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--deep);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 640px;
+    }
+
+    /* ── MISSION ── */
+    .mission {
+      background: var(--white);
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .mission-img {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+
+    .mission-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mission-img-accent {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 55%;
+      aspect-ratio: 1;
+      background: var(--sky);
+      opacity: 0.15;
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .mission-text .section-body { max-width: 100%; }
+
+    .mission-text .btn-sky {
+      display: inline-block;
+      margin-top: 2rem;
+      background: var(--sky);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
       transition: background 0.2s;
     }
-    .admin-header button:hover { background: rgba(255,255,255,0.18); color: #fff; }
 
-    .admin-body { display: flex; min-height: calc(100vh - 60px); }
+    .mission-text .btn-sky:hover { background: var(--sky-dark); }
 
-    /* SIDEBAR */
-    .admin-sidebar {
-      width: 220px; min-width: 220px; background: var(--white);
-      border-right: 1px solid var(--border); padding: 1.5rem 0;
+    /* ── SCRIPTURE PULL ── */
+    .scripture {
+      background: var(--deep);
+      padding: 7rem 2.5rem;
+      text-align: center;
     }
-    .sidebar-section { margin-bottom: 1.5rem; }
-    .sidebar-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--muted);
-      padding: 0 1.25rem; margin-bottom: 0.4rem;
+
+    .scripture-verse {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255,255,255,0.92);
+      max-width: 820px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.5;
     }
-    .sidebar-link {
-      display: flex; align-items: center; gap: 0.65rem;
-      padding: 0.55rem 1.25rem; cursor: pointer;
-      font-size: 0.88rem; color: var(--muted); font-weight: 500;
-      transition: background 0.15s, color 0.15s;
-      border-left: 3px solid transparent;
+
+    .scripture-ref {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
     }
-    .sidebar-link:hover { background: var(--bg); color: var(--text); }
-    .sidebar-link.active { background: rgba(59,141,200,0.08); color: var(--sky); border-left-color: var(--sky); font-weight: 600; }
-    .sidebar-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
-    /* MAIN */
-    .admin-main { flex: 1; padding: 2rem; overflow-y: auto; }
+    /* ── HOW TO HELP ── */
+    .help { background: var(--sand); }
 
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    .panel-header { margin-bottom: 2rem; }
-    .panel-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--deep); margin-bottom: 0.25rem; }
-    .panel-header p { font-size: 0.87rem; color: var(--muted); }
-
-    /* CARDS */
-    .card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1.75rem; margin-bottom: 1.5rem; }
-    .card-title { font-weight: 700; font-size: 1rem; color: var(--deep); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-
-    /* FORM ELEMENTS */
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-    .form-row.full { grid-template-columns: 1fr; }
-    .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
-    .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
-    .field label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
-    .field input, .field textarea, .field select {
-      padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 6px;
-      font-size: 0.9rem; font-family: inherit; outline: none;
-      transition: border-color 0.2s; background: var(--white);
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3.5rem;
     }
-    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--sky); }
-    .field textarea { resize: vertical; min-height: 90px; }
-    .field-hint { font-size: 0.75rem; color: var(--muted); }
 
-    /* TOGGLE */
-    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
-    .toggle-row:last-child { border-bottom: none; }
-    .toggle-label { font-size: 0.9rem; font-weight: 500; color: var(--text); }
-    .toggle-sub { font-size: 0.78rem; color: var(--muted); }
-    .toggle { position: relative; width: 44px; height: 24px; }
-    .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider { position: absolute; inset: 0; background: #cbd5e0; border-radius: 24px; cursor: pointer; transition: background 0.2s; }
-    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
-    .toggle input:checked + .toggle-slider { background: var(--lime); }
-    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
-
-    /* BUTTONS */
-    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 6px; font-size: 0.87rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: inherit; }
-    .btn-primary { background: var(--sky); color: #fff; }
-    .btn-primary:hover { background: var(--sky-dark); }
-    .btn-success { background: var(--lime); color: #fff; }
-    .btn-success:hover { background: var(--lime-dark); }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .btn-danger:hover { background: #c53030; }
-    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-    .btn-ghost:hover { background: var(--bg); color: var(--text); }
-    .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
-    .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-    /* TABLE */
-    .data-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
-    .data-table th { text-align: left; padding: 0.65rem 1rem; background: var(--bg); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 1px solid var(--border); }
-    .data-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    .data-table tr:last-child td { border-bottom: none; }
-    .data-table tr:hover td { background: var(--bg); }
-    .badge { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 40px; font-size: 0.72rem; font-weight: 600; }
-    .badge-green { background: #c6f6d5; color: #276749; }
-    .badge-gray { background: #e2e8f0; color: #4a5568; }
-    .badge-sky { background: #bee3f8; color: #2c5282; }
-
-    /* STAT CARDS */
-    .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
-    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
-    .stat-card-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--sky); line-height: 1; }
-    .stat-card-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
-
-    /* TOAST */
-    #toast {
-      position: fixed; bottom: 2rem; right: 2rem;
-      background: var(--deep); color: #fff;
-      padding: 0.85rem 1.5rem; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 500;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-      transform: translateY(100px); opacity: 0;
-      transition: all 0.3s; z-index: 999;
+    .help-card {
+      background: var(--white);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    #toast.show { transform: translateY(0); opacity: 1; }
-    #toast.success { background: var(--success); }
-    #toast.error { background: var(--danger); }
 
-    /* MODAL */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5); z-index: 200;
-      align-items: center; justify-content: center;
+    .help-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(26,46,59,0.1);
     }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--white); border-radius: 10px; padding: 2rem;
-      width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto;
-      margin: 1rem;
+
+    .help-card-img {
+      aspect-ratio: 16/9;
+      overflow: hidden;
     }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-    .modal-header h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--deep); }
-    .modal-close { background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--muted); line-height: 1; }
-    .modal-footer { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 
-    /* PROGRESS */
-    .progress-wrap { background: #e2e8f0; border-radius: 40px; height: 12px; overflow: hidden; margin: 0.75rem 0; }
-    .progress-fill { height: 100%; background: var(--lime); border-radius: 40px; transition: width 0.5s; }
+    .help-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
 
-    @media (max-width: 768px) {
-      .admin-sidebar { display: none; }
-      .stat-cards { grid-template-columns: 1fr 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .form-row.three { grid-template-columns: 1fr; }
+    .help-card:hover .help-card-img img { transform: scale(1.04); }
+
+    .help-card-body {
+      padding: 1.75rem;
+    }
+
+    .help-card-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--sky);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .help-card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .help-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--deep);
+      margin-bottom: 0.6rem;
+    }
+
+    .help-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--sky);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: gap 0.2s;
+    }
+
+    .card-link:hover { gap: 0.55rem; }
+    .card-link::after { content: '→'; }
+
+    /* ── WHERE WE SERVE ── */
+    .where {
+      background: var(--white);
+    }
+
+    .where-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .where-img img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .where-locations {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .location-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .location-dot {
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      background: var(--sky);
+      border-radius: 50%;
+      margin-top: 5px;
+    }
+
+    .location-item h4 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--deep);
+      margin-bottom: 0.2rem;
+    }
+
+    .location-item p {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--sand); }
+
+    .testimonials-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 6px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--sky);
+      opacity: 0.18;
+      position: absolute;
+      top: 0.5rem;
+      left: 1.25rem;
+      line-height: 1;
+    }
+
+    .testimonial-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .author-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--sky);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--deep);
+    }
+
+    .author-role {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── STORIES ── */
+    .stories { background: var(--white); }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .story-card {
+      text-decoration: none;
+      display: block;
+    }
+
+    .story-img {
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+    }
+
+    .story-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .story-card:hover .story-img img { transform: scale(1.04); }
+
+    .story-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 0.4rem;
+    }
+
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--deep);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .story-excerpt {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: var(--sky);
+      padding: 5rem 2.5rem;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .cta-banner p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.65;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      display: inline-block;
+      background: #fff;
+      color: var(--sky);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2rem;
+      border-radius: 40px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-white:hover { background: var(--sand); transform: translateY(-1px); }
+
+    .btn-outline-white {
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.6);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2rem;
+      border-radius: 40px;
+      transition: border-color 0.2s;
+    }
+
+    .btn-outline-white:hover { border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      padding: 4rem 2.5rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand img {
+      height: 38px;
+      width: auto;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      max-width: 280px;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .footer-social a {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .footer-social a:hover { border-color: var(--sky); background: rgba(59,141,200,0.15); }
+
+    .footer-social svg {
+      width: 14px;
+      height: 14px;
+      fill: rgba(255,255,255,0.6);
+    }
+
+    .footer-col h5 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 0.6rem; }
+
+    .footer-col ul a {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.62);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: #fff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-contact {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .footer-contact a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: #fff; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: var(--nav-h);
+        left: 0; right: 0;
+        background: var(--deep);
+        padding: 1.5rem;
+        gap: 0.25rem;
+        max-height: calc(100vh - var(--nav-h));
+        overflow-y: auto;
+      }
+
+      .nav-toggle { display: block; }
+
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: rgba(255,255,255,0.06);
+        border-radius: 4px;
+        margin-top: 0.25rem;
+      }
+
+      .nav-dropdown:hover .dropdown-menu { display: none; }
+      .nav-dropdown.open .dropdown-menu { display: block; }
+
+      .mission-grid,
+      .where-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      .mission-img { aspect-ratio: 16/9; }
+
+      .help-grid { grid-template-columns: 1fr; }
+
+      .testimonial-grid { grid-template-columns: 1fr; }
+
+      .stories-grid { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+
+      section { padding: 4rem 1.5rem; }
+
+      .hero-content { padding: 0 1.5rem; padding-top: var(--nav-h); }
+    }
+
+    @media (max-width: 540px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2.4rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- LOGIN (hidden — triggered by typing "admin") -->
-<div id="loginScreen">
-  <div class="login-box">
-    <img src="images/Komeo_Logo_White.webp" alt="Komeo" style="filter:invert(1) brightness(0.3) sepia(1) hue-rotate(170deg) saturate(3);" />
-    <h2>Admin Panel</h2>
-    <p>Komeo International Ministries</p>
-    <input type="password" id="passwordInput" placeholder="Enter password" onkeydown="if(event.key==='Enter') login()" />
-    <button onclick="login()">Sign In</button>
-    <div id="loginError">Incorrect password. Please try again.</div>
-  </div>
-</div>
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
+    </a>
 
-<!-- ADMIN APP -->
-<div id="adminApp">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
 
-  <div class="admin-header">
-    <div class="admin-header-left">
-      <img src="images/Komeo_Logo_White.webp" alt="Komeo" />
-      <span>Admin Panel</span>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+
+      <li class="nav-dropdown" id="aboutDrop">
+        <a href="#" onclick="return false;">About</a>
+        <div class="dropdown-menu">
+          <a href="our-beginnings.html">Our Beginnings</a>
+          <a href="meet-the-team.html">Meet the Team</a>
+          <a href="our-beliefs.html">Our Beliefs</a>
+        </div>
+      </li>
+
+      <li><a href="sponsor.html">Sponsor</a></li>
+
+      <li class="nav-dropdown" id="involveDrop">
+        <a href="#" onclick="return false;">Get Involved</a>
+        <div class="dropdown-menu">
+          <a href="sponsorship.html">Sponsorship</a>
+          <a href="mission-teams.html">Mission Teams</a>
+          <a href="missionary-support.html">Missionary Support</a>
+          <a href="outreach-efforts.html">Outreach Efforts</a>
+          <a href="other-opportunities.html">Other Opportunities</a>
+        </div>
+      </li>
+
+      <li><a href="building-project.html">Building Project</a></li>
+      <li><a href="stories.html">Stories</a></li>
+      <li><a href="donor-portal.html">Donor Portal</a></li>
+      <li><a href="give.html" class="nav-give">Give</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Sierra Leone, West Africa</span>
+      <h1>Caring for orphans.<br><em>Sharing the Gospel.</em></h1>
+      <p class="hero-sub">Komeo International Ministries walks alongside nearly 150 children in Sierra Leone — providing food, education, medical care, and the love of Christ.</p>
+      <div class="hero-ctas">
+        <a href="sponsor.html" class="btn-primary">Sponsor a Child</a>
+        <a href="our-beginnings.html" class="btn-outline">Our Story</a>
+      </div>
     </div>
-    <div style="display:flex;gap:0.75rem;align-items:center;">
-      <a href="index.html" target="_blank" style="color:rgba(255,255,255,0.6);font-size:0.82rem;text-decoration:none;">View Site ↗</a>
-      <button onclick="logout()">Sign Out</button>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner" id="statsBar">
+      <div><div class="stat-num">150+</div><div class="stat-label">Children in our care</div></div>
+      <div><div class="stat-num">2</div><div class="stat-label">Orphanages in Sierra Leone</div></div>
+      <div><div class="stat-num">14+</div><div class="stat-label">Years of ministry</div></div>
+      <div><div class="stat-num">100s</div><div class="stat-label">Families transformed</div></div>
     </div>
   </div>
 
-  <div class="admin-body">
-
-    <!-- SIDEBAR -->
-    <nav class="admin-sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-label">Overview</div>
-        <div class="sidebar-link active" onclick="showPanel('dashboard')">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-          Dashboard
-        </div>
+  <!-- MISSION -->
+  <section class="mission">
+    <div class="section-inner mission-grid">
+      <div class="mission-img">
+        <img
+          src="images/IMG_9443.a.webp"
+          alt="Children at Komeo orphanage"
+          loading="lazy"
+        />
+        <div class="mission-img-accent"></div>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Content</div>
-        <div class="sidebar-link" onclick="showPanel('stories')">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Stories
-        </div>
-        <div class="sidebar-link" onclick="showPanel('testimonials')">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Testimonials
-        </div>
-        <div class="sidebar-link" onclick="showPanel('team')">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Team
-        </div>
-        <div class="sidebar-link" onclick="showPanel('trips')">
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Trip Dates
-        </div>
+
+      <div class="mission-text">
+        <p class="eyebrow">Our Mission</p>
+        <h2 class="section-title">Demonstrating<br>God's love in<br>West Africa</h2>
+        <p class="section-body">
+          Our mission is to share the Gospel of Christ and demonstrate God's love by building relationships and responding compassionately to those with spiritual, physical, and emotional needs.
+        </p>
+        <p class="section-body" style="margin-top: 1rem;">
+          Through child sponsorship, we provide food, clothing, education, medical care, and — most importantly — Biblical discipleship to nearly 150 orphans across two orphanages in Wellington and Waterloo, Sierra Leone.
+        </p>
+        <a href="our-beginnings.html" class="btn-sky">Read Our Story</a>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Numbers</div>
-        <div class="sidebar-link" onclick="showPanel('stats')">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Site Stats
-        </div>
-        <div class="sidebar-link" onclick="showPanel('building')">
-          <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-          Building Project
-        </div>
-      </div>
-    </nav>
+    </div>
+  </section>
 
-    <!-- MAIN CONTENT -->
-    <main class="admin-main">
+  <!-- SCRIPTURE -->
+  <div class="scripture">
+    <p class="scripture-verse">
+      "Religion that is pure and undefiled before God the Father is this: to visit orphans and widows in their affliction, and to keep oneself unstained from the world."
+    </p>
+    <p class="scripture-ref">James 1:27</p>
+  </div>
 
-      <!-- DASHBOARD -->
-      <div class="panel active" id="panel-dashboard">
-        <div class="panel-header">
-          <h1>Dashboard</h1>
-          <p>Welcome back. Here's a quick overview of the site.</p>
-        </div>
-        <div class="stat-cards" id="dashStats">
-          <div class="stat-card"><div class="stat-card-num" id="dashStories">—</div><div class="stat-card-label">Published Stories</div></div>
-          <div class="stat-card"><div class="stat-card-num" id="dashTestimonials">—</div><div class="stat-card-label">Testimonials</div></div>
-          <div class="stat-card"><div class="stat-card-num" id="dashTeam">—</div><div class="stat-card-label">Team Members</div></div>
-          <div class="stat-card"><div class="stat-card-num" id="dashBricks">—</div><div class="stat-card-label">Bricks Sold</div></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Building Project Progress</div>
-          <div id="dashBrickProgress" style="font-size:0.9rem;color:var(--muted);">Loading…</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Quick Links</div>
-          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-            <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">Home Page ↗</a>
-            <a href="stories.html" target="_blank" class="btn btn-ghost btn-sm">Stories ↗</a>
-            <a href="building-project.html" target="_blank" class="btn btn-ghost btn-sm">Building Project ↗</a>
+  <!-- HOW TO HELP -->
+  <section class="help">
+    <div class="section-inner">
+      <p class="eyebrow">Get Involved</p>
+      <h2 class="section-title">Ways to make a difference</h2>
 
+      <div class="help-grid">
+
+        <div class="help-card">
+          <div class="help-card-img">
+            <img src="images/200195451_10225370021821042_6524249279042670106_n.webp" alt="Child sponsorship" loading="lazy" />
+          </div>
+          <div class="help-card-body">
+            <div class="help-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h3>Sponsor a Child</h3>
+            <p>Your monthly gift of $35 provides food, education, clothing, medical care, and Biblical discipleship for a child in one of our orphanages.</p>
+            <a href="sponsor.html" class="card-link">Find a child to sponsor</a>
           </div>
         </div>
-      </div>
 
-      <!-- STORIES -->
-      <div class="panel" id="panel-stories">
-        <div class="panel-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <div><h1>Stories</h1><p>Manage blog posts and ministry updates.</p></div>
-          <button class="btn btn-primary" onclick="openStoryModal()">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            New Story
-          </button>
-        </div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <table class="data-table">
-            <thead><tr><th>Title</th><th>Category</th><th>Author</th><th>Date</th><th>Status</th><th>Featured</th><th></th></tr></thead>
-            <tbody id="storiesTable"><tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted);">Loading…</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TESTIMONIALS -->
-      <div class="panel" id="panel-testimonials">
-        <div class="panel-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <div><h1>Testimonials</h1><p>Sponsor quotes shown on the home and sponsor pages.</p></div>
-          <button class="btn btn-primary" onclick="openTestimonialModal()">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Testimonial
-          </button>
-        </div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <table class="data-table">
-            <thead><tr><th>Author</th><th>Role</th><th>Quote Preview</th><th>Order</th><th>Status</th><th></th></tr></thead>
-            <tbody id="testimonialsTable"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">Loading…</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TEAM -->
-      <div class="panel" id="panel-team">
-        <div class="panel-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <div><h1>Team</h1><p>Manage leadership, board members, and next gen team.</p></div>
-          <button class="btn btn-primary" onclick="openTeamModal()">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Member
-          </button>
-        </div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <table class="data-table">
-            <thead><tr><th>Name</th><th>Role</th><th>Group</th><th>Order</th><th>Status</th><th></th></tr></thead>
-            <tbody id="teamTable"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">Loading…</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TRIP DATES -->
-      <div class="panel" id="panel-trips">
-        <div class="panel-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <div><h1>Mission Trip Dates</h1><p>Update the trip schedule shown on the Mission Teams page.</p></div>
-          <button class="btn btn-primary" onclick="openTripModal()">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Trip
-          </button>
-        </div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <table class="data-table">
-            <thead><tr><th>Month</th><th>Season</th><th>Description</th><th>Order</th><th>Status</th><th></th></tr></thead>
-            <tbody id="tripsTable"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">Loading…</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- STATS -->
-      <div class="panel" id="panel-stats">
-        <div class="panel-header">
-          <h1>Site Stats</h1>
-          <p>The numbers shown in the stats bar on the home page.</p>
-        </div>
-        <div class="card">
-          <div class="card-title">Edit Stats</div>
-          <div id="statsForm">Loading…</div>
-          <div style="margin-top:1.5rem;">
-            <button class="btn btn-success" onclick="saveStats()">Save All Stats</button>
+        <div class="help-card">
+          <div class="help-card-img">
+            <img src="images/Website+Photos+-+Mission+Teams+Page-01.webp" alt="Mission teams" loading="lazy" />
+          </div>
+          <div class="help-card-body">
+            <div class="help-card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h3>Join a Mission Team</h3>
+            <p>Travel to Sierra Leone and experience firsthand the joy of sharing the love of Christ with orphans and the surrounding communities.</p>
+            <a href="mission-teams.html" class="card-link">Learn about mission trips</a>
           </div>
         </div>
-      </div>
 
-      <!-- BUILDING PROJECT -->
-      <div class="panel" id="panel-building">
-        <div class="panel-header">
-          <h1>Building Project</h1>
-          <p>Update the brick campaign progress shown on the Building Project page.</p>
+        <div class="help-card">
+          <div class="help-card-img">
+            <img src="images/Where+We+Serve+-+Website-01.webp" alt="Outreach efforts" loading="lazy" style="object-fit: contain; background: #f0f4f8;" />
+          </div>
+          <div class="help-card-body">
+            <div class="help-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Support Outreach</h3>
+            <p>Help us bring Bibles, medical supplies, and the Gospel to remote jungle villages in Sierra Leone through our ongoing community outreach programs.</p>
+            <a href="outreach-efforts.html" class="card-link">Explore outreach efforts</a>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-title">Brick Campaign</div>
-          <div id="buildingProgress" style="margin-bottom:1.5rem;color:var(--muted);font-size:0.9rem;">Loading…</div>
-          <div class="form-row three">
-            <div class="field">
-              <label>Bricks Sold</label>
-              <input type="number" id="bricksSold" min="0" />
-            </div>
-            <div class="field">
-              <label>Bricks Goal</label>
-              <input type="number" id="bricksGoal" min="1" />
-            </div>
-            <div class="field">
-              <label>Price Per Brick ($)</label>
-              <input type="number" id="brickPrice" min="1" />
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE WE SERVE -->
+  <section class="where">
+    <div class="section-inner where-grid">
+      <div class="where-text">
+        <p class="eyebrow">Where We Serve</p>
+        <h2 class="section-title">Wellington & Waterloo, Sierra Leone</h2>
+        <p class="section-body">We serve orphans in local villages devastated by Ebola in 2014 and by a brutal 12-year civil war that ended in 2002. Our community outreach also reaches remote jungle villages including Rokbop, Matsumana, and Mile 91.</p>
+
+        <div class="where-locations">
+          <div class="location-item">
+            <div class="location-dot"></div>
+            <div>
+              <h4>Wellington Orphanage</h4>
+              <p>Home to children who lost parents during Sierra Leone's civil war — raised as Christians with a heart to rebuild their nation.</p>
             </div>
           </div>
-          <div class="field">
-            <label>Campaign Description</label>
-            <textarea id="brickDesc" rows="3"></textarea>
+          <div class="location-item">
+            <div class="location-dot"></div>
+            <div>
+              <h4>Waterloo Orphanage</h4>
+              <p>A second home where children receive education, discipleship, and the stability of a loving family environment.</p>
+            </div>
           </div>
-          <button class="btn btn-success" onclick="saveBuilding()">Save Building Update</button>
+          <div class="location-item">
+            <div class="location-dot"></div>
+            <div>
+              <h4>Jungle Village Outreach</h4>
+              <p>Bringing Bibles, medical supplies, and the Gospel message to Rokbop, Matsumana, Mile 91, and surrounding remote communities.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-    </main>
-  </div>
-</div>
-
-<!-- STORY MODAL -->
-<div class="modal-overlay" id="storyModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="storyModalTitle">New Story</h3>
-      <button class="modal-close" onclick="closeModal('storyModal')">×</button>
-    </div>
-    <input type="hidden" id="storyId" />
-    <div class="form-row">
-      <div class="field"><label>Title *</label><input type="text" id="storyTitle" placeholder="Story title" /></div>
-      <div class="field"><label>Slug *</label><input type="text" id="storySlug" placeholder="marias-story" /></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label>Author</label><input type="text" id="storyAuthor" value="Shana Gibelyou" /></div>
-      <div class="field"><label>Category</label>
-        <select id="storyCategory">
-          <option>Ministry Update</option><option>Sponsorship</option><option>Education</option>
-          <option>Mission Teams</option><option>Crisis Response</option><option>Sponsor Story</option><option>Other</option>
-        </select>
+      <div class="where-img">
+        <img
+          src="images/Where+We+Serve+-+Website-01.webp"
+          alt="Map of where Komeo serves in Sierra Leone"
+          loading="lazy"
+        />
       </div>
     </div>
-    <div class="field"><label>Excerpt</label><textarea id="storyExcerpt" rows="2" placeholder="Short summary shown on the stories page…"></textarea></div>
-    <div class="field"><label>Image URL</label><input type="text" id="storyImage" placeholder="images/IMG_1234.webp or https://…" /></div>
-    <div class="field"><label>External URL</label><input type="text" id="storyExternal" placeholder="https://www.komeo.org/stories/… (leave blank for internal)" /><span class="field-hint">If the full story lives on the old Squarespace site, paste that URL here.</span></div>
-    <div class="form-row">
-      <div class="field"><label>Publish Date</label><input type="date" id="storyDate" /></div>
-    </div>
-    <div style="display:flex;gap:2rem;margin-bottom:1rem;">
-      <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;cursor:pointer;">
-        <input type="checkbox" id="storyPublished" checked /> Published
-      </label>
-      <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;cursor:pointer;">
-        <input type="checkbox" id="storyFeatured" /> Featured (shown at top)
-      </label>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('storyModal')">Cancel</button>
-      <button class="btn btn-success" onclick="saveStory()">Save Story</button>
-    </div>
-  </div>
-</div>
+  </section>
 
-<!-- TESTIMONIAL MODAL -->
-<div class="modal-overlay" id="testimonialModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="testimonialModalTitle">Add Testimonial</h3>
-      <button class="modal-close" onclick="closeModal('testimonialModal')">×</button>
-    </div>
-    <input type="hidden" id="testimonialId" />
-    <div class="field"><label>Quote *</label><textarea id="testimonialQuote" rows="4" placeholder="The sponsor's quote…"></textarea></div>
-    <div class="form-row">
-      <div class="field"><label>Author Name *</label><input type="text" id="testimonialName" /></div>
-      <div class="field"><label>Role / Context</label><input type="text" id="testimonialRole" placeholder="Sponsoring Martha for 11 years" /></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label>Initials (if no photo)</label><input type="text" id="testimonialInitials" placeholder="AG" maxlength="3" /></div>
-      <div class="field"><label>Photo URL (optional)</label><input type="text" id="testimonialImage" placeholder="images/photo.webp" /></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label>Sort Order</label><input type="number" id="testimonialOrder" value="0" min="0" /></div>
-    </div>
-    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;cursor:pointer;margin-bottom:1rem;">
-      <input type="checkbox" id="testimonialPublished" checked /> Published
-    </label>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('testimonialModal')">Cancel</button>
-      <button class="btn btn-success" onclick="saveTestimonial()">Save Testimonial</button>
-    </div>
-  </div>
-</div>
-
-<!-- TEAM MODAL -->
-<div class="modal-overlay" id="teamModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="teamModalTitle">Add Team Member</h3>
-      <button class="modal-close" onclick="closeModal('teamModal')">×</button>
-    </div>
-    <input type="hidden" id="teamId" />
-    <div class="form-row">
-      <div class="field"><label>Name *</label><input type="text" id="teamName" /></div>
-      <div class="field"><label>Role *</label><input type="text" id="teamRole" placeholder="Board Member" /></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label>Group</label>
-        <select id="teamGroup">
-          <option value="leadership">Leadership / Staff</option>
-          <option value="board">Board of Directors</option>
-          <option value="nextgen">Next Gen</option>
-        </select>
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="section-inner">
+      <div class="testimonials-header">
+        <div>
+          <p class="eyebrow">Sponsor Stories</p>
+          <h2 class="section-title">Lives changed on both sides of the ocean</h2>
+        </div>
+        <a href="stories.html" class="card-link" style="font-size: 0.9rem;">All stories</a>
       </div>
-      <div class="field"><label>Sort Order</label><input type="number" id="teamOrder" value="0" min="0" /></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label>Photo URL (optional)</label><input type="text" id="teamImage" placeholder="images/headshot.webp" /></div>
-      <div class="field"><label>Initials (if no photo)</label><input type="text" id="teamInitials" placeholder="JD" maxlength="3" /></div>
-    </div>
-    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;cursor:pointer;margin-bottom:1rem;">
-      <input type="checkbox" id="teamPublished" checked /> Published
-    </label>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('teamModal')">Cancel</button>
-      <button class="btn btn-success" onclick="saveTeamMember()">Save Member</button>
-    </div>
-  </div>
-</div>
 
-<!-- TRIP MODAL -->
-<div class="modal-overlay" id="tripModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="tripModalTitle">Add Trip</h3>
-      <button class="modal-close" onclick="closeModal('tripModal')">×</button>
+      <div class="testimonial-grid" id="testimonialsGrid">
+        <!-- loaded from Supabase -->
+      </div>
     </div>
-    <input type="hidden" id="tripId" />
-    <div class="form-row">
-      <div class="field"><label>Month Label *</label><input type="text" id="tripMonth" placeholder="Mar" maxlength="3" /></div>
-      <div class="field"><label>Season / Name *</label><input type="text" id="tripSeason" placeholder="Spring Trip" /></div>
-    </div>
-    <div class="field"><label>Description</label><textarea id="tripDesc" rows="2"></textarea></div>
-    <div class="form-row">
-      <div class="field"><label>Year (optional)</label><input type="number" id="tripYear" placeholder="2026" /></div>
-      <div class="field"><label>Sort Order</label><input type="number" id="tripOrder" value="0" min="0" /></div>
-    </div>
-    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;cursor:pointer;margin-bottom:1rem;">
-      <input type="checkbox" id="tripPublished" checked /> Published
-    </label>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('tripModal')">Cancel</button>
-      <button class="btn btn-success" onclick="saveTrip()">Save Trip</button>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div class="section-inner" style="padding: 0;">
+      <h2>A child is waiting for you.</h2>
+      <p>Right now, there are children in Sierra Leone hoping someone will step forward. Your $35/month changes a life.</p>
+      <div class="cta-buttons">
+        <a href="sponsor.html" class="btn-white">Sponsor a Child Today</a>
+        <a href="give.html" class="btn-outline-white">Make a One-Time Gift</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- TOAST -->
-<div id="toast"></div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
 
-<script>
-  const SB_URL  = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
-  const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
+        <div class="footer-brand">
+          <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
+          <p>Sharing the Gospel and demonstrating God's love by caring for orphans in Sierra Leone, West Africa since 2010.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/KomeoInternational" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/komeoministries/" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
 
+        <div class="footer-col">
+          <h5>About</h5>
+          <ul>
+            <li><a href="our-beginnings.html">Our Beginnings</a></li>
+            <li><a href="meet-the-team.html">Meet the Team</a></li>
+            <li><a href="our-beliefs.html">Our Beliefs</a></li>
+          </ul>
+        </div>
 
-  // ── AUTH ──
-  async function login() {
-    const pw = document.getElementById('passwordInput').value;
-    const errEl = document.getElementById('loginError');
-    errEl.style.display = 'none';
-    try {
-      const res = await fetch('/api/admin-auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw }),
-      });
-      if (res.ok) {
-        const { token } = await res.json();
-        sessionStorage.setItem('komeo_admin', token);
-        document.getElementById('loginScreen').classList.remove('visible');
-        document.getElementById('adminApp').style.display = 'block';
-        loadDashboard();
-      } else {
-        errEl.style.display = 'block';
-      }
-    } catch (e) {
-      errEl.textContent = 'Network error. Please try again.';
-      errEl.style.display = 'block';
-    }
-  }
+        <div class="footer-col">
+          <h5>Get Involved</h5>
+          <ul>
+            <li><a href="sponsor.html">Sponsor a Child</a></li>
+            <li><a href="mission-teams.html">Mission Teams</a></li>
+            <li><a href="missionary-support.html">Missionary Support</a></li>
+            <li><a href="outreach-efforts.html">Outreach Efforts</a></li>
+            <li><a href="other-opportunities.html">Other Opportunities</a></li>
+          </ul>
+        </div>
 
-  function logout() {
-    sessionStorage.removeItem('komeo_admin');
-    location.reload();
-  }
+        <div class="footer-col">
+          <h5>More</h5>
+          <ul>
+            <li><a href="building-project.html">Building Project</a></li>
+            <li><a href="stories.html">Stories</a></li>
+            <li><a href="donor-portal.html">Donor Portal</a></li>
+            <li><a href="give.html">Give</a></li>
+          </ul>
+        </div>
 
-  // ── KEYSTROKE TRIGGER ──
-  // Type "admin" anywhere on the page to reveal the login box
-  let keyBuffer = '';
-  document.addEventListener('keydown', (e) => {
-    // Don't fire if already in an input field
-    if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
-    // Only track single printable characters
-    if (e.key.length !== 1) return;
-    keyBuffer += e.key.toLowerCase();
-    if (keyBuffer.length > 5) keyBuffer = keyBuffer.slice(-5);
-    if (keyBuffer.includes('admin')) {
-      const ls = document.getElementById('loginScreen');
-      ls.classList.add('visible');
-      setTimeout(() => document.getElementById('passwordInput').focus(), 50);
-      keyBuffer = '';
-    }
-  });
+      </div>
 
-  // Close login on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.getElementById('loginScreen').classList.remove('visible');
-    }
-  });
+      <div class="footer-bottom">
+        <p>&copy; 2025 Komeo International Ministries. All rights reserved.</p>
+        <div class="footer-contact">
+          P.O. Box 21586, Oklahoma City, OK 73156<br>
+          <a href="tel:4056596802">405-659-6802</a> &nbsp;·&nbsp;
+          <a href="mailto:info@komeo.org">info@komeo.org</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-  window.addEventListener('DOMContentLoaded', () => {
-    // Grab focus immediately so keystrokes work without clicking first
-    document.body.setAttribute('tabindex', '-1');
-    document.body.focus();
-
-    const stored = sessionStorage.getItem('komeo_admin');
-    if (stored && stored.length > 10) {
-      document.getElementById('adminApp').style.display = 'block';
-      loadDashboard();
-    }
-  });
-
-  // ── SUPABASE FETCH ──
-  async function sb(table, method = 'GET', body = null, id = null, query = '') {
-    const url = `${SB_URL}/rest/v1/${table}${id ? `?id=eq.${id}` : query ? `?${query}` : ''}`;
-    const res = await fetch(url, {
-      method,
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': `Bearer ${SB_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': method === 'POST' ? 'return=representation' : method === 'PATCH' ? 'return=representation' : '',
-      },
-      body: body ? JSON.stringify(body) : null,
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
     });
-    if (!res.ok) throw new Error(await res.text());
-    return method === 'DELETE' ? null : res.json();
-  }
 
-  // ── TOAST ──
-  function toast(msg, type = 'success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `show ${type}`;
-    setTimeout(() => t.className = '', 3000);
-  }
+    // Mobile toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
 
-  // ── NAV ──
-  function showPanel(name) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-    document.getElementById(`panel-${name}`).classList.add('active');
-    document.querySelector(`[onclick="showPanel('${name}')"]`).classList.add('active');
-    const loaders = { stories: loadStories, testimonials: loadTestimonials, team: loadTeam, trips: loadTrips, stats: loadStats, building: loadBuilding, dashboard: loadDashboard };
-    if (loaders[name]) loaders[name]();
-  }
+    // Mobile dropdown toggles
+    document.querySelectorAll('.nav-dropdown > a').forEach(a => {
+      a.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) {
+          e.preventDefault();
+          this.closest('.nav-dropdown').classList.toggle('open');
+        }
+      });
+    });
+  </script>
 
-  // ── MODAL ──
-  function openModal(id) { document.getElementById(id).classList.add('open'); }
-  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-  // ── DASHBOARD ──
-  async function loadDashboard() {
-    try {
-      const [stories, testimonials, team, building] = await Promise.all([
-        sb('komeo_stories', 'GET', null, null, 'published=eq.true&select=id'),
-        sb('komeo_testimonials', 'GET', null, null, 'published=eq.true&select=id'),
-        sb('komeo_team', 'GET', null, null, 'published=eq.true&select=id'),
-        sb('komeo_building'),
-      ]);
-      document.getElementById('dashStories').textContent = stories.length;
-      document.getElementById('dashTestimonials').textContent = testimonials.length;
-      document.getElementById('dashTeam').textContent = team.length;
-      const b = building[0];
-      document.getElementById('dashBricks').textContent = b.bricks_sold.toLocaleString();
-      const pct = ((b.bricks_sold / b.bricks_goal) * 100).toFixed(1);
-      document.getElementById('dashBrickProgress').innerHTML = `
-        <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.5rem;">
-          <span><strong>${b.bricks_sold.toLocaleString()}</strong> bricks sold</span>
-          <span>Goal: <strong>${b.bricks_goal.toLocaleString()}</strong></span>
-        </div>
-        <div class="progress-wrap"><div class="progress-fill" style="width:${Math.max(pct, 0.5)}%"></div></div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-top:0.4rem;">${pct}% complete · $${(b.bricks_sold * b.brick_price).toLocaleString()} raised</div>
-      `;
-    } catch(e) { console.error(e); }
-  }
+  <script>
+    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
 
-  // ── STORIES ──
-  async function loadStories() {
-    try {
-      const rows = await sb('komeo_stories', 'GET', null, null, 'order=published_at.desc');
-      const tbody = document.getElementById('storiesTable');
-      if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted);">No stories yet.</td></tr>'; return; }
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td style="font-weight:600;max-width:220px;">${r.title}</td>
-          <td><span class="badge badge-sky">${r.category}</span></td>
-          <td>${r.author}</td>
-          <td>${r.published_at ? new Date(r.published_at).toLocaleDateString() : '—'}</td>
-          <td><span class="badge ${r.published ? 'badge-green' : 'badge-gray'}">${r.published ? 'Published' : 'Draft'}</span></td>
-          <td>${r.featured ? '⭐' : ''}</td>
-          <td style="white-space:nowrap;">
-            <button class="btn btn-ghost btn-sm" onclick="editStory('${r.id}')">Edit</button>
-            <button class="btn btn-danger btn-sm" style="margin-left:0.5rem;" onclick="deleteStory('${r.id}')">Delete</button>
-          </td>
-        </tr>`).join('');
-    } catch(e) { toast('Error loading stories', 'error'); }
-  }
+    async function sbGet(table, query = '') {
+      const res = await fetch(`${SB}/rest/v1/${table}?${query}`, {
+        headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+      });
+      return res.json();
+    }
 
-  function openStoryModal(r = null) {
-    document.getElementById('storyModalTitle').textContent = r ? 'Edit Story' : 'New Story';
-    document.getElementById('storyId').value = r?.id || '';
-    document.getElementById('storyTitle').value = r?.title || '';
-    document.getElementById('storySlug').value = r?.slug || '';
-    document.getElementById('storyAuthor').value = r?.author || 'Shana Gibelyou';
-    document.getElementById('storyCategory').value = r?.category || 'Ministry Update';
-    document.getElementById('storyExcerpt').value = r?.excerpt || '';
-    document.getElementById('storyImage').value = r?.image_url || '';
-    document.getElementById('storyExternal').value = r?.external_url || '';
-    document.getElementById('storyDate').value = r?.published_at ? r.published_at.split('T')[0] : new Date().toISOString().split('T')[0];
-    document.getElementById('storyPublished').checked = r ? r.published : true;
-    document.getElementById('storyFeatured').checked = r?.featured || false;
-    openModal('storyModal');
-  }
+    // Load stats
+    async function loadStats() {
+      try {
+        const rows = await sbGet('komeo_stats', 'order=sort_order.asc');
+        if (!rows.length) return;
+        document.getElementById('statsBar').innerHTML = rows.map(r => `
+          <div>
+            <div class="stat-num">${r.value}</div>
+            <div class="stat-label">${r.label}</div>
+          </div>`).join('');
+      } catch(e) { console.warn('Stats load failed', e); }
+    }
 
-  async function editStory(id) {
-    const rows = await sb('komeo_stories', 'GET', null, null, `id=eq.${id}`);
-    openStoryModal(rows[0]);
-  }
+    // Load testimonials
+    async function loadTestimonials() {
+      try {
+        const rows = await sbGet('komeo_testimonials', 'published=eq.true&order=sort_order.asc');
+        if (!rows.length) return;
+        document.getElementById('testimonialsGrid').innerHTML = rows.map(r => `
+          <div class="testimonial-card">
+            <p>"${r.quote}"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="${r.image_url ? `background:transparent;padding:0;overflow:hidden;` : ''}">
+                ${r.image_url
+                  ? `<img src="${r.image_url}" alt="${r.author_name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`
+                  : (r.author_initials || r.author_name.split(' ').map(n=>n[0]).join('').slice(0,2))}
+              </div>
+              <div>
+                <div class="author-name">${r.author_name}</div>
+                <div class="author-role">${r.author_role || ''}</div>
+              </div>
+            </div>
+          </div>`).join('');
+      } catch(e) { console.warn('Testimonials load failed', e); }
+    }
 
-  async function saveStory() {
-    const id = document.getElementById('storyId').value;
-    const data = {
-      title: document.getElementById('storyTitle').value.trim(),
-      slug: document.getElementById('storySlug').value.trim(),
-      author: document.getElementById('storyAuthor').value.trim(),
-      category: document.getElementById('storyCategory').value,
-      excerpt: document.getElementById('storyExcerpt').value.trim(),
-      image_url: document.getElementById('storyImage').value.trim(),
-      external_url: document.getElementById('storyExternal').value.trim(),
-      published_at: document.getElementById('storyDate').value,
-      published: document.getElementById('storyPublished').checked,
-      featured: document.getElementById('storyFeatured').checked,
-      updated_at: new Date().toISOString(),
-    };
-    if (!data.title || !data.slug) { toast('Title and slug are required', 'error'); return; }
-    try {
-      if (id) {
-        await sb(`komeo_stories?id=eq.${id}`, 'PATCH', data);
-      } else {
-        await sb('komeo_stories', 'POST', data);
-      }
-      closeModal('storyModal');
-      toast('Story saved!');
-      loadStories();
-    } catch(e) { toast('Error saving story', 'error'); }
-  }
-
-  async function deleteStory(id) {
-    if (!confirm('Delete this story?')) return;
-    try {
-      await sb(`komeo_stories?id=eq.${id}`, 'DELETE');
-      toast('Story deleted');
-      loadStories();
-    } catch(e) { toast('Error deleting', 'error'); }
-  }
-
-  // ── TESTIMONIALS ──
-  async function loadTestimonials() {
-    try {
-      const rows = await sb('komeo_testimonials', 'GET', null, null, 'order=sort_order.asc');
-      const tbody = document.getElementById('testimonialsTable');
-      if (!rows.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">No testimonials yet.</td></tr>'; return; }
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td style="font-weight:600;">${r.author_name}</td>
-          <td style="color:var(--muted);font-size:0.85rem;">${r.author_role || '—'}</td>
-          <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.85rem;color:var(--muted);">"${r.quote}"</td>
-          <td>${r.sort_order}</td>
-          <td><span class="badge ${r.published ? 'badge-green' : 'badge-gray'}">${r.published ? 'Published' : 'Hidden'}</span></td>
-          <td style="white-space:nowrap;">
-            <button class="btn btn-ghost btn-sm" onclick="editTestimonial('${r.id}')">Edit</button>
-            <button class="btn btn-danger btn-sm" style="margin-left:0.5rem;" onclick="deleteTestimonial('${r.id}')">Delete</button>
-          </td>
-        </tr>`).join('');
-    } catch(e) { toast('Error loading testimonials', 'error'); }
-  }
-
-  function openTestimonialModal(r = null) {
-    document.getElementById('testimonialModalTitle').textContent = r ? 'Edit Testimonial' : 'Add Testimonial';
-    document.getElementById('testimonialId').value = r?.id || '';
-    document.getElementById('testimonialQuote').value = r?.quote || '';
-    document.getElementById('testimonialName').value = r?.author_name || '';
-    document.getElementById('testimonialRole').value = r?.author_role || '';
-    document.getElementById('testimonialInitials').value = r?.author_initials || '';
-    document.getElementById('testimonialImage').value = r?.image_url || '';
-    document.getElementById('testimonialOrder').value = r?.sort_order || 0;
-    document.getElementById('testimonialPublished').checked = r ? r.published : true;
-    openModal('testimonialModal');
-  }
-
-  async function editTestimonial(id) {
-    const rows = await sb('komeo_testimonials', 'GET', null, null, `id=eq.${id}`);
-    openTestimonialModal(rows[0]);
-  }
-
-  async function saveTestimonial() {
-    const id = document.getElementById('testimonialId').value;
-    const data = {
-      quote: document.getElementById('testimonialQuote').value.trim(),
-      author_name: document.getElementById('testimonialName').value.trim(),
-      author_role: document.getElementById('testimonialRole').value.trim(),
-      author_initials: document.getElementById('testimonialInitials').value.trim(),
-      image_url: document.getElementById('testimonialImage').value.trim(),
-      sort_order: parseInt(document.getElementById('testimonialOrder').value) || 0,
-      published: document.getElementById('testimonialPublished').checked,
-    };
-    if (!data.quote || !data.author_name) { toast('Quote and author are required', 'error'); return; }
-    try {
-      if (id) { await sb(`komeo_testimonials?id=eq.${id}`, 'PATCH', data); }
-      else { await sb('komeo_testimonials', 'POST', data); }
-      closeModal('testimonialModal');
-      toast('Testimonial saved!');
-      loadTestimonials();
-    } catch(e) { toast('Error saving', 'error'); }
-  }
-
-  async function deleteTestimonial(id) {
-    if (!confirm('Delete this testimonial?')) return;
-    try { await sb(`komeo_testimonials?id=eq.${id}`, 'DELETE'); toast('Deleted'); loadTestimonials(); }
-    catch(e) { toast('Error', 'error'); }
-  }
-
-  // ── TEAM ──
-  async function loadTeam() {
-    try {
-      const rows = await sb('komeo_team', 'GET', null, null, 'order=group_type.asc,sort_order.asc');
-      const tbody = document.getElementById('teamTable');
-      if (!rows.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">No members yet.</td></tr>'; return; }
-      const groupLabel = { leadership: 'Leadership', board: 'Board', nextgen: 'Next Gen' };
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td style="font-weight:600;">${r.name}</td>
-          <td style="color:var(--muted);font-size:0.85rem;">${r.role}</td>
-          <td><span class="badge badge-sky">${groupLabel[r.group_type] || r.group_type}</span></td>
-          <td>${r.sort_order}</td>
-          <td><span class="badge ${r.published ? 'badge-green' : 'badge-gray'}">${r.published ? 'Shown' : 'Hidden'}</span></td>
-          <td style="white-space:nowrap;">
-            <button class="btn btn-ghost btn-sm" onclick="editTeamMember('${r.id}')">Edit</button>
-            <button class="btn btn-danger btn-sm" style="margin-left:0.5rem;" onclick="deleteTeamMember('${r.id}')">Delete</button>
-          </td>
-        </tr>`).join('');
-    } catch(e) { toast('Error loading team', 'error'); }
-  }
-
-  function openTeamModal(r = null) {
-    document.getElementById('teamModalTitle').textContent = r ? 'Edit Member' : 'Add Member';
-    document.getElementById('teamId').value = r?.id || '';
-    document.getElementById('teamName').value = r?.name || '';
-    document.getElementById('teamRole').value = r?.role || '';
-    document.getElementById('teamGroup').value = r?.group_type || 'board';
-    document.getElementById('teamOrder').value = r?.sort_order || 0;
-    document.getElementById('teamImage').value = r?.image_url || '';
-    document.getElementById('teamInitials').value = r?.initials || '';
-    document.getElementById('teamPublished').checked = r ? r.published : true;
-    openModal('teamModal');
-  }
-
-  async function editTeamMember(id) {
-    const rows = await sb('komeo_team', 'GET', null, null, `id=eq.${id}`);
-    openTeamModal(rows[0]);
-  }
-
-  async function saveTeamMember() {
-    const id = document.getElementById('teamId').value;
-    const data = {
-      name: document.getElementById('teamName').value.trim(),
-      role: document.getElementById('teamRole').value.trim(),
-      group_type: document.getElementById('teamGroup').value,
-      sort_order: parseInt(document.getElementById('teamOrder').value) || 0,
-      image_url: document.getElementById('teamImage').value.trim(),
-      initials: document.getElementById('teamInitials').value.trim(),
-      published: document.getElementById('teamPublished').checked,
-    };
-    if (!data.name || !data.role) { toast('Name and role are required', 'error'); return; }
-    try {
-      if (id) { await sb(`komeo_team?id=eq.${id}`, 'PATCH', data); }
-      else { await sb('komeo_team', 'POST', data); }
-      closeModal('teamModal');
-      toast('Member saved!');
-      loadTeam();
-    } catch(e) { toast('Error saving', 'error'); }
-  }
-
-  async function deleteTeamMember(id) {
-    if (!confirm('Remove this team member?')) return;
-    try { await sb(`komeo_team?id=eq.${id}`, 'DELETE'); toast('Removed'); loadTeam(); }
-    catch(e) { toast('Error', 'error'); }
-  }
-
-  // ── TRIPS ──
-  async function loadTrips() {
-    try {
-      const rows = await sb('komeo_trips', 'GET', null, null, 'order=sort_order.asc');
-      const tbody = document.getElementById('tripsTable');
-      if (!rows.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">No trips yet.</td></tr>'; return; }
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td style="font-weight:700;font-size:1.1rem;color:var(--sky);">${r.month_label}</td>
-          <td style="font-weight:600;">${r.season}</td>
-          <td style="color:var(--muted);font-size:0.85rem;max-width:240px;">${r.description || '—'}</td>
-          <td>${r.sort_order}</td>
-          <td><span class="badge ${r.published ? 'badge-green' : 'badge-gray'}">${r.published ? 'Shown' : 'Hidden'}</span></td>
-          <td style="white-space:nowrap;">
-            <button class="btn btn-ghost btn-sm" onclick="editTrip('${r.id}')">Edit</button>
-            <button class="btn btn-danger btn-sm" style="margin-left:0.5rem;" onclick="deleteTrip('${r.id}')">Delete</button>
-          </td>
-        </tr>`).join('');
-    } catch(e) { toast('Error loading trips', 'error'); }
-  }
-
-  function openTripModal(r = null) {
-    document.getElementById('tripModalTitle').textContent = r ? 'Edit Trip' : 'Add Trip';
-    document.getElementById('tripId').value = r?.id || '';
-    document.getElementById('tripMonth').value = r?.month_label || '';
-    document.getElementById('tripSeason').value = r?.season || '';
-    document.getElementById('tripDesc').value = r?.description || '';
-    document.getElementById('tripYear').value = r?.year || '';
-    document.getElementById('tripOrder').value = r?.sort_order || 0;
-    document.getElementById('tripPublished').checked = r ? r.published : true;
-    openModal('tripModal');
-  }
-
-  async function editTrip(id) {
-    const rows = await sb('komeo_trips', 'GET', null, null, `id=eq.${id}`);
-    openTripModal(rows[0]);
-  }
-
-  async function saveTrip() {
-    const id = document.getElementById('tripId').value;
-    const data = {
-      month_label: document.getElementById('tripMonth').value.trim(),
-      season: document.getElementById('tripSeason').value.trim(),
-      description: document.getElementById('tripDesc').value.trim(),
-      year: parseInt(document.getElementById('tripYear').value) || null,
-      sort_order: parseInt(document.getElementById('tripOrder').value) || 0,
-      published: document.getElementById('tripPublished').checked,
-    };
-    if (!data.month_label || !data.season) { toast('Month and season are required', 'error'); return; }
-    try {
-      if (id) { await sb(`komeo_trips?id=eq.${id}`, 'PATCH', data); }
-      else { await sb('komeo_trips', 'POST', data); }
-      closeModal('tripModal');
-      toast('Trip saved!');
-      loadTrips();
-    } catch(e) { toast('Error saving', 'error'); }
-  }
-
-  async function deleteTrip(id) {
-    if (!confirm('Delete this trip?')) return;
-    try { await sb(`komeo_trips?id=eq.${id}`, 'DELETE'); toast('Deleted'); loadTrips(); }
-    catch(e) { toast('Error', 'error'); }
-  }
-
-  // ── STATS ──
-  async function loadStats() {
-    try {
-      const rows = await sb('komeo_stats', 'GET', null, null, 'order=sort_order.asc');
-      const container = document.getElementById('statsForm');
-      container.innerHTML = rows.map(r => `
-        <div style="display:grid;grid-template-columns:120px 1fr 2fr;gap:1rem;align-items:end;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border);">
-          <div class="field" style="margin:0;"><label>Value</label><input type="text" id="stat-val-${r.id}" value="${r.value}" /></div>
-          <div class="field" style="margin:0;"><label>Label</label><input type="text" id="stat-label-${r.id}" value="${r.label}" /></div>
-          <div style="font-size:0.78rem;color:var(--muted);padding-bottom:0.65rem;">ID: <code>${r.id}</code></div>
-        </div>`).join('');
-    } catch(e) { toast('Error loading stats', 'error'); }
-  }
-
-  async function saveStats() {
-    const ids = ['children', 'orphanages', 'years', 'families'];
-    try {
-      for (const id of ids) {
-        const valEl = document.getElementById(`stat-val-${id}`);
-        const lblEl = document.getElementById(`stat-label-${id}`);
-        if (!valEl) continue;
-        await sb(`komeo_stats?id=eq.${id}`, 'PATCH', { value: valEl.value.trim(), label: lblEl.value.trim() });
-      }
-      toast('Stats updated!');
-    } catch(e) { toast('Error saving stats', 'error'); }
-  }
-
-  // ── BUILDING ──
-  async function loadBuilding() {
-    try {
-      const rows = await sb('komeo_building');
-      const b = rows[0];
-      document.getElementById('bricksSold').value = b.bricks_sold;
-      document.getElementById('bricksGoal').value = b.bricks_goal;
-      document.getElementById('brickPrice').value = b.brick_price;
-      document.getElementById('brickDesc').value = b.description || '';
-      const pct = ((b.bricks_sold / b.bricks_goal) * 100).toFixed(2);
-      document.getElementById('buildingProgress').innerHTML = `
-        <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.5rem;">
-          <span><strong>${b.bricks_sold.toLocaleString()}</strong> of ${b.bricks_goal.toLocaleString()} bricks sold</span>
-          <span>${pct}% · $${(b.bricks_sold * b.brick_price).toLocaleString()} raised</span>
-        </div>
-        <div class="progress-wrap"><div class="progress-fill" style="width:${Math.max(pct, 0.3)}%"></div></div>`;
-    } catch(e) { toast('Error loading building data', 'error'); }
-  }
-
-  async function saveBuilding() {
-    const data = {
-      bricks_sold: parseInt(document.getElementById('bricksSold').value) || 0,
-      bricks_goal: parseInt(document.getElementById('bricksGoal').value) || 16000,
-      brick_price: parseInt(document.getElementById('brickPrice').value) || 25,
-      description: document.getElementById('brickDesc').value.trim(),
-      updated_at: new Date().toISOString(),
-    };
-    try {
-      await sb('komeo_building?id=eq.1', 'PATCH', data);
-      toast('Building project updated!');
-      loadBuilding();
-    } catch(e) { toast('Error saving', 'error'); }
-  }
-</script>
+    loadStats();
+    loadTestimonials();
+  </script>
+  <script src="/admin-trigger.js"></script>
 </body>
 </html>
