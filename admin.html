@@ -195,6 +195,31 @@
     .progress-wrap { background: #e2e8f0; border-radius: 40px; height: 12px; overflow: hidden; margin: 0.75rem 0; }
     .progress-fill { height: 100%; background: var(--lime); border-radius: 40px; transition: width 0.5s; }
 
+    /* IMAGE UPLOAD */
+    .img-upload-wrap { display: flex; gap: 0.5rem; align-items: flex-start; }
+    .img-upload-wrap input { flex: 1; }
+    .upload-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.62rem 1rem; background: var(--deep); color: #fff;
+      border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; white-space: nowrap; font-family: inherit;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .upload-btn:hover { background: #0f1e29; }
+    .upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .upload-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .upload-preview {
+      margin-top: 0.6rem; border-radius: 6px; overflow: hidden;
+      max-height: 160px; display: none;
+    }
+    .upload-preview img { width: 100%; max-height: 160px; object-fit: cover; display: block; }
+    .upload-progress {
+      height: 3px; background: var(--border); border-radius: 2px;
+      margin-top: 0.4rem; overflow: hidden; display: none;
+    }
+    .upload-progress-fill { height: 100%; background: var(--lime); width: 0%; transition: width 0.3s; }
+    input[type="file"].hidden-file { display: none; }
+
     @media (max-width: 768px) {
       .admin-sidebar { display: none; }
       .stat-cards { grid-template-columns: 1fr 1fr; }
@@ -449,7 +474,20 @@
       <textarea id="storyContent" rows="14" placeholder="Write the full story here. You can use plain text (double line break = new paragraph) or basic HTML tags like &lt;h2&gt;, &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;img&gt;…"></textarea>
       <span class="field-hint">Plain text: double line break = new paragraph. Or paste HTML for richer formatting.</span>
     </div>
-    <div class="field"><label>Image URL</label><input type="text" id="storyImage" placeholder="images/IMG_1234.webp or https://…" /></div>
+    <div class="field">
+      <label>Story Image</label>
+      <div class="img-upload-wrap">
+        <input type="text" id="storyImage" placeholder="images/IMG_1234.webp or paste URL" />
+        <button type="button" class="upload-btn" onclick="document.getElementById('storyImageFile').click()">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload
+        </button>
+        <input type="file" id="storyImageFile" class="hidden-file" accept="image/*" onchange="uploadStoryImage(this)" />
+      </div>
+      <div class="upload-progress" id="storyUploadProgress"><div class="upload-progress-fill" id="storyUploadFill"></div></div>
+      <div class="upload-preview" id="storyImagePreview"><img id="storyImagePreviewImg" src="" alt="Preview" /></div>
+      <span class="field-hint">Upload a new image or type a path from your images folder.</span>
+    </div>
     <div class="field"><label>External URL</label><input type="text" id="storyExternal" placeholder="https://www.komeo.org/stories/… (leave blank for internal)" /><span class="field-hint">If the full story lives on the old Squarespace site, paste that URL here.</span></div>
     <div class="form-row">
       <div class="field"><label>Publish Date</label><input type="date" id="storyDate" /></div>
@@ -712,6 +750,14 @@
     document.getElementById('storyPublished').checked = r ? r.published : true;
     document.getElementById('storyFeatured').checked = r?.featured || false;
     if (!r) document.getElementById('storyContent').value = '';
+    // Clear preview
+    document.getElementById('storyImagePreview').style.display = 'none';
+    document.getElementById('storyImagePreviewImg').src = '';
+    // Show preview if editing existing story with image
+    if (r && r.image_url) {
+      document.getElementById('storyImagePreviewImg').src = r.image_url;
+      document.getElementById('storyImagePreview').style.display = 'block';
+    }
     openModal('storyModal');
   }
 
@@ -1015,6 +1061,103 @@
       loadBuilding();
     } catch(e) { toast('Error saving', 'error'); }
   }
+
+  // ── IMAGE UPLOAD ──
+  const SB_STORAGE = 'https://mnyarbqxyynysoqiwtnh.supabase.co/storage/v1';
+  const BUCKET = 'komeo-images';
+
+  async function uploadStoryImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // Show progress bar
+    const progress = document.getElementById('storyUploadProgress');
+    const fill = document.getElementById('storyUploadFill');
+    const btn = document.querySelector('.upload-btn');
+    progress.style.display = 'block';
+    fill.style.width = '0%';
+    btn.disabled = true;
+    btn.textContent = 'Uploading…';
+
+    try {
+      // Sanitize filename
+      const ext = file.name.split('.').pop().toLowerCase();
+      const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase();
+      const filename = `stories/${base}-${Date.now()}.${ext}`;
+
+      // Animate progress to 60% while uploading
+      let pct = 0;
+      const ticker = setInterval(() => {
+        pct = Math.min(pct + 8, 60);
+        fill.style.width = pct + '%';
+      }, 100);
+
+      const res = await fetch(`${SB_STORAGE}/object/${BUCKET}/${filename}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Content-Type': file.type,
+          'x-upsert': 'true',
+        },
+        body: file,
+      });
+
+      clearInterval(ticker);
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err);
+      }
+
+      fill.style.width = '100%';
+
+      // Build public URL
+      const publicUrl = `${SB_STORAGE}/object/public/${BUCKET}/${filename}`;
+
+      // Set the URL field
+      document.getElementById('storyImage').value = publicUrl;
+
+      // Show preview
+      const preview = document.getElementById('storyImagePreview');
+      const previewImg = document.getElementById('storyImagePreviewImg');
+      previewImg.src = publicUrl;
+      preview.style.display = 'block';
+
+      toast('Image uploaded!');
+
+    } catch(e) {
+      toast('Upload failed: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      setTimeout(() => {
+        progress.style.display = 'none';
+        fill.style.width = '0%';
+      }, 1000);
+      btn.disabled = false;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload`;
+      input.value = '';
+    }
+  }
+
+  // Show preview when URL is typed manually
+  document.addEventListener('DOMContentLoaded', () => {
+    const imgInput = document.getElementById('storyImage');
+    if (imgInput) {
+      imgInput.addEventListener('input', () => {
+        const val = imgInput.value.trim();
+        const preview = document.getElementById('storyImagePreview');
+        const previewImg = document.getElementById('storyImagePreviewImg');
+        if (val && (val.startsWith('http') || val.startsWith('images/'))) {
+          previewImg.src = val;
+          preview.style.display = 'block';
+        } else {
+          preview.style.display = 'none';
+        }
+      });
+    }
+  });
+
 </script>
 </body>
 </html>
