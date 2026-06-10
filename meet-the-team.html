@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet the Team — Komeo International Ministries</title>
+  <meta name="description" content="Meet the board members, founders, and staff behind Komeo International Ministries — caring for orphans in Sierra Leone since 2010." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky:      #3B8DC8;
+      --sky-dark: #2A6FA0;
+      --deep:     #1A2E3B;
+      --sand:     #F5EFE6;
+      --lime:     #7AB648;
+      --lime-dark:#5E9234;
+      --white:    #ffffff;
+      --text:     #1A2E3B;
+      --muted:    #5A6E7A;
+      --border:   rgba(26,46,59,0.12);
+      --nav-h:    72px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h); background: var(--sky);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; z-index: 100; transition: background 0.3s;
+    }
+    nav.scrolled { background: var(--deep); box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.88); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+      padding: 0.4rem 0.75rem; border-radius: 4px;
+      transition: color 0.2s, background 0.2s; white-space: nowrap;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; opacity: 0.7; }
+    .dropdown-menu {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0;
+      background: var(--deep); border-radius: 6px; overflow: hidden;
+      min-width: 180px; box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    }
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a {
+      display: block; color: rgba(255,255,255,0.85) !important;
+      font-size: 0.82rem !important; padding: 0.6rem 1rem !important;
+      border-radius: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover { background: rgba(255,255,255,0.08) !important; color: #fff !important; }
+    .nav-give {
+      background: var(--lime) !important; color: #fff !important;
+      padding: 0.45rem 1.2rem !important; border-radius: 40px !important;
+      font-weight: 600 !important; letter-spacing: 0.06em !important;
+    }
+    .nav-give:hover { background: var(--lime-dark) !important; }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      margin-top: var(--nav-h);
+      background: var(--deep);
+      padding: 4.5rem 2.5rem 4rem;
+      text-align: center;
+    }
+
+    .breadcrumb {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; margin-bottom: 1.25rem;
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.75); }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 700; color: #fff; margin-bottom: 1rem;
+    }
+
+    .page-hero p {
+      font-size: 1.05rem; color: rgba(255,255,255,0.62);
+      max-width: 520px; margin: 0 auto; line-height: 1.7; font-weight: 300;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5.5rem 2.5rem 6rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 700; color: var(--deep);
+      margin-bottom: 3rem;
+    }
+
+    /* ── LEADERSHIP ROW (founders + president + chair) ── */
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      margin-bottom: 5rem;
+    }
+
+    .leader-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .leader-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      border: 4px solid var(--sand);
+      box-shadow: 0 8px 32px rgba(26,46,59,0.12);
+      flex-shrink: 0;
+    }
+
+    .leader-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    .leader-photo.placeholder {
+      background: var(--sky);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .leader-photo.placeholder span {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .leader-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--deep); margin-bottom: 0.3rem;
+    }
+
+    .leader-role {
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sky);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    /* ── BOARD GRID ── */
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem 2rem;
+    }
+
+    .board-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .board-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 3px solid var(--sand);
+      box-shadow: 0 4px 16px rgba(26,46,59,0.1);
+      flex-shrink: 0;
+    }
+
+    .board-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    .board-photo.placeholder {
+      background: var(--deep);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .board-photo.placeholder span {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .board-name {
+      font-weight: 600; font-size: 0.97rem;
+      color: var(--deep); margin-bottom: 0.2rem;
+    }
+
+    .board-role {
+      font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── NEXT GEN SECTION ── */
+    .nextgen {
+      background: var(--sand);
+      padding: 5rem 2.5rem;
+    }
+
+    .nextgen-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .nextgen-text .section-eyebrow { color: var(--sky); }
+
+    .nextgen-text p {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.75; margin-top: 1rem;
+    }
+
+    .nextgen-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .nextgen-photo {
+      width: 160px; height: 160px;
+      border-radius: 50%; overflow: hidden;
+      margin-bottom: 1.25rem;
+      border: 4px solid var(--white);
+      box-shadow: 0 8px 32px rgba(26,46,59,0.12);
+    }
+
+    .nextgen-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    /* ── SCRIPTURE ── */
+    .scripture-band {
+      background: var(--deep); padding: 5.5rem 2.5rem; text-align: center;
+    }
+    .scripture-band blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.5vw, 2rem);
+      font-style: italic; color: rgba(255,255,255,0.9);
+      max-width: 760px; margin: 0 auto 1.25rem; line-height: 1.55;
+    }
+    .scripture-band cite {
+      font-size: 0.8rem; font-style: normal; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--sky);
+    }
+
+    /* ── CTA ── */
+    .cta-band {
+      background: var(--sky); padding: 4.5rem 2.5rem; text-align: center;
+    }
+    .cta-band h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem); color: #fff; margin-bottom: 0.85rem;
+    }
+    .cta-band p {
+      font-size: 1rem; color: rgba(255,255,255,0.8);
+      max-width: 480px; margin: 0 auto 2rem; line-height: 1.65;
+    }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      display: inline-block; background: #fff; color: var(--sky);
+      text-decoration: none; font-size: 0.9rem; font-weight: 700;
+      padding: 0.85rem 2rem; border-radius: 40px; transition: background 0.2s;
+    }
+    .btn-white:hover { background: var(--sand); }
+    .btn-outline-white {
+      display: inline-block; border: 2px solid rgba(255,255,255,0.6);
+      color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      padding: 0.85rem 2rem; border-radius: 40px; transition: border-color 0.2s;
+    }
+    .btn-outline-white:hover { border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--deep); padding: 4rem 2.5rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand img { height: 38px; width: auto; margin-bottom: 1rem; opacity: 0.9; }
+    .footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 280px; margin-bottom: 1.25rem; }
+    .footer-social { display: flex; gap: 0.75rem; }
+    .footer-social a { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+    .footer-social a:hover { border-color: var(--sky); background: rgba(59,141,200,0.15); }
+    .footer-social svg { width: 14px; height: 14px; fill: rgba(255,255,255,0.6); }
+    .footer-col h5 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a { font-size: 0.87rem; color: rgba(255,255,255,0.62); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+    .footer-contact { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-align: right; line-height: 1.6; }
+    .footer-contact a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+    .footer-contact a:hover { color: #fff; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 960px) {
+      .leadership-grid { grid-template-columns: repeat(2, 1fr); }
+      .board-grid { grid-template-columns: repeat(3, 1fr); }
+      .nextgen-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: var(--nav-h); left: 0; right: 0;
+        background: var(--deep); padding: 1.5rem; gap: 0.25rem;
+        max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
+      }
+      .nav-toggle { display: block; }
+      .dropdown-menu { position: static; box-shadow: none; background: rgba(255,255,255,0.06); border-radius: 4px; margin-top: 0.25rem; }
+      .nav-dropdown:hover .dropdown-menu { display: none; }
+      .nav-dropdown.open .dropdown-menu { display: block; }
+      .section-wrap { padding: 4rem 1.5rem 5rem; }
+    }
+
+    @media (max-width: 640px) {
+      .leadership-grid { grid-template-columns: 1fr; }
+      .board-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="return false;">About</a>
+        <div class="dropdown-menu">
+          <a href="our-beginnings.html">Our Beginnings</a>
+          <a href="meet-the-team.html">Meet the Team</a>
+          <a href="our-beliefs.html">Our Beliefs</a>
+        </div>
+      </li>
+      <li><a href="sponsor.html">Sponsor</a></li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="return false;">Get Involved</a>
+        <div class="dropdown-menu">
+          <a href="sponsorship.html">Sponsorship</a>
+          <a href="mission-teams.html">Mission Teams</a>
+          <a href="missionary-support.html">Missionary Support</a>
+          <a href="outreach-efforts.html">Outreach Efforts</a>
+          <a href="other-opportunities.html">Other Opportunities</a>
+        </div>
+      </li>
+      <li><a href="building-project.html">Building Project</a></li>
+      <li><a href="stories.html">Stories</a></li>
+      <li><a href="donor-portal.html">Donor Portal</a></li>
+      <li><a href="give.html" class="nav-give">Give</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>About</span>
+      <span>/</span>
+      <span style="color:rgba(255,255,255,0.6)">Meet the Team</span>
+    </div>
+    <h1>Meet the Team</h1>
+    <p>The people in Oklahoma City and Sierra Leone who make this ministry possible — united by a calling to care for orphans and share the Gospel.</p>
+  </div>
+
+  <!-- LEADERSHIP -->
+  <div class="section-wrap">
+    <p class="section-eyebrow">Leadership</p>
+    <h2 class="section-title">Founders &amp; Staff</h2>
+
+    <div class="leadership-grid">
+
+      <div class="leader-card">
+        <div class="leader-photo placeholder">
+          <span>JD</span>
+        </div>
+        <div class="leader-name">Jeremy Dunnington</div>
+        <div class="leader-role">Board Chair</div>
+      </div>
+
+      <div class="leader-card">
+        <div class="leader-photo">
+          <img src="images/Shana+-+new+headshot+2022.webp" alt="Shana Gibelyou" loading="lazy" />
+        </div>
+        <div class="leader-name">Shana Gibelyou</div>
+        <div class="leader-role">President &amp; Co-Founder</div>
+      </div>
+
+      <div class="leader-card">
+        <div class="leader-photo">
+          <img src="images/Screen+Shot+2022-10-08+at+3.46.48+PM.webp" alt="Shanna Crawford" loading="lazy" />
+        </div>
+        <div class="leader-name">Shanna Crawford</div>
+        <div class="leader-role">Board Member &amp; Co-Founder</div>
+      </div>
+
+      <div class="leader-card">
+        <div class="leader-photo">
+          <img src="images/Jerome_Crawford.webp" alt="Jerome Crawford" loading="lazy" />
+        </div>
+        <div class="leader-name">Jerome Crawford</div>
+        <div class="leader-role">Co-Founder</div>
+      </div>
+
+      <div class="leader-card">
+        <div class="leader-photo">
+          <img src="images/Screenshot+2026-05-29+at+9.29.21+AM.webp" alt="Jasmyn Kline" loading="lazy" />
+        </div>
+        <div class="leader-name">Jasmyn Kline</div>
+        <div class="leader-role">Missions &amp; Communications</div>
+      </div>
+
+    </div>
+
+    <hr class="divider" />
+
+    <!-- BOARD -->
+    <p class="section-eyebrow">Board of Directors</p>
+    <h2 class="section-title">Board Members</h2>
+
+    <div class="board-grid">
+
+      <div class="board-card">
+        <div class="board-photo">
+          <img src="images/A1798F0A-3F8A-43C1-BE23-BD4B49E99FA9.webp" alt="Brett Anderson" loading="lazy" />
+        </div>
+        <div class="board-name">Brett Anderson</div>
+        <div class="board-role">Board Member</div>
+      </div>
+
+      <div class="board-card">
+        <div class="board-photo placeholder">
+          <span>JB</span>
+        </div>
+        <div class="board-name">Jessica Burleson</div>
+        <div class="board-role">Board Member</div>
+      </div>
+
+      <div class="board-card">
+        <div class="board-photo">
+          <img src="images/photo+jul+04,+6+38+30+pm-2.webp" alt="Amy Grant" loading="lazy" />
+        </div>
+        <div class="board-name">Amy Grant</div>
+        <div class="board-role">Board Member</div>
+      </div>
+
+      <div class="board-card">
+        <div class="board-photo">
+          <img src="images/image000000.webp" alt="David Hines" loading="lazy" />
+        </div>
+        <div class="board-name">David Hines</div>
+        <div class="board-role">Board Member</div>
+      </div>
+
+      <div class="board-card">
+        <div class="board-photo placeholder">
+          <span>BL</span>
+        </div>
+        <div class="board-name">Brandon Lodge</div>
+        <div class="board-role">Board Member</div>
+      </div>
+
+      <div class="board-card">
+        <div class="board-photo">
+          <img src="images/stephen_voehl2+(1).webp" alt="Stephen Voehl" loading="lazy" />
+        </div>
+        <div class="board-name">Stephen Voehl</div>
+        <div class="board-role">Board Member</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NEXT GEN -->
+  <div class="nextgen">
+    <div class="nextgen-inner">
+      <div class="nextgen-text">
+        <p class="section-eyebrow">Next Generation</p>
+        <h2 class="section-title" style="margin-bottom: 0;">Raising up the next generation of leaders</h2>
+        <p>Komeo isn't just caring for children today — we're investing in the future leaders of Sierra Leone. Our Next Gen Board ensures the ministry will continue to grow and impact lives for generations to come.</p>
+      </div>
+      <div class="nextgen-card">
+        <div class="nextgen-photo">
+          <img src="images/Screenshot+2026-05-29+at+9.34.05+AM.webp" alt="Silas Crawford" loading="lazy" />
+        </div>
+        <div class="leader-name">Silas Crawford</div>
+        <div class="leader-role" style="margin-top:0.3rem;">Next Gen Board Leader</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTURE -->
+  <div class="scripture-band">
+    <blockquote>"Let no one despise you for your youth, but set the believers an example in speech, in conduct, in love, in faith, in purity."</blockquote>
+    <cite>1 Timothy 4:12</cite>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Partner with our team.</h2>
+    <p>Sponsor a child, join a mission trip, or give today — and become part of what God is doing in Sierra Leone.</p>
+    <div class="cta-buttons">
+      <a href="sponsor.html" class="btn-white">Sponsor a Child</a>
+      <a href="give.html" class="btn-outline-white">Give Today</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/Komeo_Logo_White.webp" alt="Komeo International Ministries" />
+          <p>Sharing the Gospel and demonstrating God's love by caring for orphans in Sierra Leone, West Africa since 2010.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/KomeoInternational" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/komeoministries/" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <ul>
+            <li><a href="our-beginnings.html">Our Beginnings</a></li>
+            <li><a href="meet-the-team.html">Meet the Team</a></li>
+            <li><a href="our-beliefs.html">Our Beliefs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Get Involved</h5>
+          <ul>
+            <li><a href="sponsor.html">Sponsor a Child</a></li>
+            <li><a href="mission-teams.html">Mission Teams</a></li>
+            <li><a href="missionary-support.html">Missionary Support</a></li>
+            <li><a href="outreach-efforts.html">Outreach Efforts</a></li>
+            <li><a href="other-opportunities.html">Other Opportunities</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>More</h5>
+          <ul>
+            <li><a href="building-project.html">Building Project</a></li>
+            <li><a href="stories.html">Stories</a></li>
+            <li><a href="donor-portal.html">Donor Portal</a></li>
+            <li><a href="give.html">Give</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Komeo International Ministries. All rights reserved.</p>
+        <div class="footer-contact">
+          P.O. Box 21586, Oklahoma City, OK 73156<br>
+          <a href="tel:4056596802">405-659-6802</a> &nbsp;·&nbsp;
+          <a href="mailto:info@komeo.org">info@komeo.org</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    document.querySelectorAll('.nav-dropdown > a').forEach(a => {
+      a.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) {
+          e.preventDefault();
+          this.closest('.nav-dropdown').classList.toggle('open');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
