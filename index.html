@@ -1026,6 +1026,22 @@
 
 
 
+    @media (max-width: 600px) {
+      .hero-ctas {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 0.75rem;
+      }
+      .btn-primary, .btn-outline {
+        font-size: 0.82rem !important;
+        padding: 0.75rem 1.25rem !important;
+        white-space: nowrap;
+      }
+      .hero-scroll {
+        bottom: 1rem;
+      }
+    }
+
     @media (max-width: 540px) {
       .footer-grid { grid-template-columns: 1fr; }
       .stats-inner { grid-template-columns: 1fr 1fr; }
