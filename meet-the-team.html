@@ -428,124 +428,29 @@
   <div class="section-wrap">
     <p class="section-eyebrow">Leadership</p>
     <h2 class="section-title">Founders &amp; Staff</h2>
-
-    <div class="leadership-grid">
-
-      <div class="leader-card">
-        <div class="leader-photo placeholder">
-          <span>JD</span>
-        </div>
-        <div class="leader-name">Jeremy Dunnington</div>
-        <div class="leader-role">Board Chair</div>
-      </div>
-
-      <div class="leader-card">
-        <div class="leader-photo">
-          <img src="images/Shana+-+new+headshot+2022.webp" alt="Shana Gibelyou" loading="lazy" />
-        </div>
-        <div class="leader-name">Shana Gibelyou</div>
-        <div class="leader-role">President &amp; Co-Founder</div>
-      </div>
-
-      <div class="leader-card">
-        <div class="leader-photo">
-          <img src="images/Screen+Shot+2022-10-08+at+3.46.48+PM.webp" alt="Shanna Crawford" loading="lazy" />
-        </div>
-        <div class="leader-name">Shanna Crawford</div>
-        <div class="leader-role">Board Member &amp; Co-Founder</div>
-      </div>
-
-      <div class="leader-card">
-        <div class="leader-photo">
-          <img src="images/Jerome_Crawford.webp" alt="Jerome Crawford" loading="lazy" />
-        </div>
-        <div class="leader-name">Jerome Crawford</div>
-        <div class="leader-role">Co-Founder</div>
-      </div>
-
-      <div class="leader-card">
-        <div class="leader-photo">
-          <img src="images/Screenshot+2026-05-29+at+9.29.21+AM.webp" alt="Jasmyn Kline" loading="lazy" />
-        </div>
-        <div class="leader-name">Jasmyn Kline</div>
-        <div class="leader-role">Missions &amp; Communications</div>
-      </div>
-
+    <div class="leadership-grid" id="leadershipGrid">
+      <!-- loaded from Supabase -->
     </div>
 
     <hr class="divider" />
 
-    <!-- BOARD -->
     <p class="section-eyebrow">Board of Directors</p>
     <h2 class="section-title">Board Members</h2>
-
-    <div class="board-grid">
-
-      <div class="board-card">
-        <div class="board-photo">
-          <img src="images/A1798F0A-3F8A-43C1-BE23-BD4B49E99FA9.webp" alt="Brett Anderson" loading="lazy" />
-        </div>
-        <div class="board-name">Brett Anderson</div>
-        <div class="board-role">Board Member</div>
-      </div>
-
-      <div class="board-card">
-        <div class="board-photo placeholder">
-          <span>JB</span>
-        </div>
-        <div class="board-name">Jessica Burleson</div>
-        <div class="board-role">Board Member</div>
-      </div>
-
-      <div class="board-card">
-        <div class="board-photo">
-          <img src="images/photo+jul+04,+6+38+30+pm-2.webp" alt="Amy Grant" loading="lazy" />
-        </div>
-        <div class="board-name">Amy Grant</div>
-        <div class="board-role">Board Member</div>
-      </div>
-
-      <div class="board-card">
-        <div class="board-photo">
-          <img src="images/image000000.webp" alt="David Hines" loading="lazy" />
-        </div>
-        <div class="board-name">David Hines</div>
-        <div class="board-role">Board Member</div>
-      </div>
-
-      <div class="board-card">
-        <div class="board-photo placeholder">
-          <span>BL</span>
-        </div>
-        <div class="board-name">Brandon Lodge</div>
-        <div class="board-role">Board Member</div>
-      </div>
-
-      <div class="board-card">
-        <div class="board-photo">
-          <img src="images/stephen_voehl2+(1).webp" alt="Stephen Voehl" loading="lazy" />
-        </div>
-        <div class="board-name">Stephen Voehl</div>
-        <div class="board-role">Board Member</div>
-      </div>
-
+    <div class="board-grid" id="boardGrid">
+      <!-- loaded from Supabase -->
     </div>
   </div>
 
-  <!-- NEXT GEN -->
-  <div class="nextgen">
+  <!-- NEXT GEN -->  <!-- NEXT GEN -->
+  <div class="nextgen" id="nextgenSection">
     <div class="nextgen-inner">
       <div class="nextgen-text">
         <p class="section-eyebrow">Next Generation</p>
         <h2 class="section-title" style="margin-bottom: 0;">Raising up the next generation of leaders</h2>
         <p>Komeo isn't just caring for children today — we're investing in the future leaders of Sierra Leone. Our Next Gen Board ensures the ministry will continue to grow and impact lives for generations to come.</p>
       </div>
-      <div class="nextgen-card">
-        <div class="nextgen-photo">
-          <img src="images/Screenshot+2026-05-29+at+9.34.05+AM.webp" alt="Silas Crawford" loading="lazy" />
-        </div>
-        <div class="leader-name">Silas Crawford</div>
-        <div class="leader-role" style="margin-top:0.3rem;">Next Gen Board Leader</div>
+      <div id="nextgenGrid" style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <!-- loaded from Supabase -->
       </div>
     </div>
   </div>
@@ -639,5 +544,56 @@
     });
   </script>
 
+
+  <script>
+    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
+
+    function memberCard(r, size = 'leader') {
+      const photoSize = size === 'leader' ? '180px' : '130px';
+      const nameClass = size === 'leader' ? 'leader-name' : 'board-name';
+      const roleClass = size === 'leader' ? 'leader-role' : 'board-role';
+      const initials = r.initials || r.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+      return `
+        <div class="${size}-card" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+          <div class="${size}-photo ${r.image_url ? '' : 'placeholder'}" style="width:${photoSize};height:${photoSize};">
+            ${r.image_url
+              ? `<img src="${r.image_url}" alt="${r.name}" loading="lazy" />`
+              : `<span>${initials}</span>`}
+          </div>
+          <div class="${nameClass}">${r.name}</div>
+          <div class="${roleClass}">${r.role}</div>
+        </div>`;
+    }
+
+    async function loadTeam() {
+      try {
+        const res = await fetch(`${SB}/rest/v1/komeo_team?published=eq.true&order=group_type.asc,sort_order.asc`, {
+          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+        });
+        const rows = await res.json();
+        if (!rows.length) return;
+
+        const leadership = rows.filter(r => r.group_type === 'leadership');
+        const board = rows.filter(r => r.group_type === 'board');
+        const nextgen = rows.filter(r => r.group_type === 'nextgen');
+
+        if (leadership.length) document.getElementById('leadershipGrid').innerHTML = leadership.map(r => memberCard(r, 'leader')).join('');
+        if (board.length) document.getElementById('boardGrid').innerHTML = board.map(r => memberCard(r, 'board')).join('');
+        if (nextgen.length) {
+          document.getElementById('nextgenGrid').innerHTML = nextgen.map(r => `
+            <div class="nextgen-card">
+              <div class="nextgen-photo">
+                ${r.image_url ? `<img src="${r.image_url}" alt="${r.name}" loading="lazy" />` : `<div style="background:var(--sky);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:rgba(255,255,255,0.8);">${(r.initials || r.name.split(' ').map(n=>n[0]).join('').slice(0,2))}</div>`}
+              </div>
+              <div class="leader-name">${r.name}</div>
+              <div class="leader-role" style="margin-top:0.3rem;">${r.role}</div>
+            </div>`).join('');
+        }
+      } catch(e) { console.warn('Team load failed', e); }
+    }
+
+    loadTeam();
+  </script>
 </body>
 </html>
