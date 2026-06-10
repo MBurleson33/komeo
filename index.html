@@ -197,13 +197,15 @@
     .hero::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 65%;
-      height: 100%;
-      background: radial-gradient(ellipse at 25% 55%, rgba(10,20,30,0.75) 0%, rgba(10,20,30,0.45) 40%, transparent 70%);
+      top: 50%;
+      left: 275px;
+      transform: translateY(-50%);
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(circle, rgba(10,20,30,0.78) 0%, rgba(10,20,30,0.55) 35%, rgba(10,20,30,0.2) 60%, transparent 75%);
       pointer-events: none;
       z-index: 1;
+      border-radius: 50%;
     }
 
     .hero-eyebrow {
