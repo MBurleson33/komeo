@@ -187,6 +187,19 @@
       padding-top: var(--nav-h);
     }
 
+    .hero-content::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 1.5rem;
+      transform: translateY(-50%);
+      width: 680px;
+      height: 580px;
+      background: radial-gradient(ellipse at 35% 50%, rgba(10,20,30,0.72) 0%, rgba(10,20,30,0.45) 45%, transparent 75%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
     .hero-eyebrow {
       display: inline-block;
       font-size: 0.75rem;
@@ -968,7 +981,7 @@
       <li class="nav-dropdown" id="involveDrop">
         <a href="#" onclick="return false;">Get Involved</a>
         <div class="dropdown-menu">
-          <a href="sponsorship.html">Sponsorship</a>
+          <a href="sponsor.html">Sponsorship</a>
           <a href="mission-teams.html">Mission Teams</a>
           <a href="missionary-support.html">Missionary Support</a>
           <a href="outreach-efforts.html">Outreach Efforts</a>
