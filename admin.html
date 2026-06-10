@@ -577,8 +577,8 @@
         body: JSON.stringify({ password: pw }),
       });
       if (res.ok) {
-        const { token } = await res.json();
-        sessionStorage.setItem('komeo_admin', token);
+
+        sessionStorage.setItem('komeo_admin', 'authenticated');
         document.getElementById('loginScreen').classList.remove('visible');
         document.getElementById('adminApp').style.display = 'block';
         loadDashboard();
@@ -598,13 +598,11 @@
 
   window.addEventListener('DOMContentLoaded', () => {
     const stored = sessionStorage.getItem('komeo_admin');
-    if (stored && stored.length > 10) {
+    if (stored && stored.length > 0) {
       document.getElementById('adminApp').style.display = 'block';
       loadDashboard();
-    } else {
-      // No valid session — redirect back to home
-      window.location.href = '/index.html';
     }
+    // If no session, page stays blank — admin-trigger.js handles login
   });
 
   // ── SUPABASE FETCH ──
