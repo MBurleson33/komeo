@@ -150,68 +150,15 @@
   </div>
 
   <!-- FEATURED -->
-  <div class="featured">
-    <div class="featured-card">
-      <div class="featured-img">
-        <img src="images/IMG_9443.a.webp" alt="Maria's Story" loading="lazy" />
-      </div>
-      <div class="featured-body">
-        <p class="eyebrow">Featured Story</p>
-        <h2>Maria's Story</h2>
-        <p class="featured-meta">By Shana Gibelyou · April 20, 2025</p>
-        <p>A young girl's life transformed through the love of Christ, the faithfulness of sponsors, and the daily work of Komeo's ministry in Sierra Leone.</p>
-        <a href="https://www.komeo.org/stories/marias-story" target="_blank" rel="noopener" class="btn-sky">Read Maria's Story</a>
-      </div>
-    </div>
+  <div class="featured" id="featuredSection" style="display:none;">
+    <div class="featured-card" id="featuredCard"></div>
   </div>
 
   <!-- STORIES GRID -->
-  <div class="stories-section">
+  <div class="stories-section" id="storiesSection">
     <h2>More Stories</h2>
-    <div class="stories-grid">
-
-      <a href="https://www.komeo.org/stories/impact-of-sponsorship" target="_blank" rel="noopener" class="story-card">
-        <div class="story-img"><img src="images/IMG_4752.webp" alt="The Impact of Sponsorship" loading="lazy" /></div>
-        <div class="story-tag">Sponsorship</div>
-        <div class="story-title">The Impact of Sponsorship</div>
-        <div class="story-meta">Shana Gibelyou · July 8, 2021</div>
-      </a>
-
-      <a href="https://www.komeo.org/stories/college-update" target="_blank" rel="noopener" class="story-card">
-        <div class="story-img"><img src="images/20230810-225853-744312.webp" alt="College Update" loading="lazy" /></div>
-        <div class="story-tag">Education</div>
-        <div class="story-title">College Update</div>
-        <div class="story-meta">Shana Gibelyou · July 17, 2019</div>
-      </a>
-
-      <a href="https://www.komeo.org/stories/komeo-is-growing" target="_blank" rel="noopener" class="story-card">
-        <div class="story-img"><img src="images/20230810-164321-AF7569.webp" alt="Komeo is Growing" loading="lazy" /></div>
-        <div class="story-tag">Ministry Update</div>
-        <div class="story-title">Komeo is Growing!</div>
-        <div class="story-meta">Shana Gibelyou · January 29, 2023</div>
-      </a>
-
-      <a href="https://www.komeo.org/stories" target="_blank" rel="noopener" class="story-card">
-        <div class="story-img"><img src="images/IMG_5795.webp" alt="Floods in Sierra Leone" loading="lazy" /></div>
-        <div class="story-tag">Crisis Response</div>
-        <div class="story-title">Floods Continue to Ravage Freetown, Sierra Leone</div>
-        <div class="story-meta">Shana Gibelyou · 2022</div>
-      </a>
-
-      <a href="https://www.komeo.org/stories" target="_blank" rel="noopener" class="story-card">
-        <div class="story-img"><img src="images/IMG_6147.webp" alt="Mission team story" loading="lazy" /></div>
-        <div class="story-tag">Mission Teams</div>
-        <div class="story-title">What Happens When You Say Yes to a Mission Trip</div>
-        <div class="story-meta">Komeo Team · 2022</div>
-      </a>
-
-      <a href="https://www.komeo.org/stories" target="_blank" rel="noopener" class="story-card">
-        <div class="story-img"><img src="images/unnamed+87.webp" alt="Sponsor story" loading="lazy" /></div>
-        <div class="story-tag">Sponsor Story</div>
-        <div class="story-title">A Sponsor's Letter That Changed Everything</div>
-        <div class="story-meta">Komeo Team · 2022</div>
-      </a>
-
+    <div class="stories-grid" id="storiesGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Loading stories…</div>
     </div>
   </div>
 
@@ -249,6 +196,71 @@
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
     document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
     document.querySelectorAll('.nav-dropdown > a').forEach(a => { a.addEventListener('click', function(e) { if (window.innerWidth <= 900) { e.preventDefault(); this.closest('.nav-dropdown').classList.toggle('open'); } }); });
+  </script>
+
+  <script>
+    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
+
+    async function loadStories() {
+      try {
+        const res = await fetch(`${SB}/rest/v1/komeo_stories?published=eq.true&order=published_at.desc`, {
+          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+        });
+        const rows = await res.json();
+        if (!rows.length) {
+          document.getElementById('storiesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">No stories yet.</div>';
+          return;
+        }
+
+        // Featured story (first one marked featured, or just first)
+        const featured = rows.find(r => r.featured) || rows[0];
+        const rest = rows.filter(r => r.id !== featured.id);
+
+        // Render featured
+        const featuredSection = document.getElementById('featuredSection');
+        const featuredCard = document.getElementById('featuredCard');
+        featuredSection.style.display = 'block';
+        const featuredUrl = featured.external_url || `#`;
+        const featuredDate = featured.published_at ? new Date(featured.published_at).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
+        featuredCard.innerHTML = `
+          <div class="featured-img">
+            ${featured.image_url ? `<img src="${featured.image_url}" alt="${featured.title}" loading="lazy" />` : `<div style="background:var(--deep);width:100%;height:100%;"></div>`}
+          </div>
+          <div class="featured-body">
+            <p class="eyebrow">Featured Story</p>
+            <h2>${featured.title}</h2>
+            <p class="featured-meta">By ${featured.author}${featuredDate ? ' · ' + featuredDate : ''}</p>
+            ${featured.excerpt ? `<p>${featured.excerpt}</p>` : ''}
+            <a href="${featuredUrl}" ${featured.external_url ? 'target="_blank" rel="noopener"' : ''} class="btn-sky">Read Story</a>
+          </div>`;
+
+        // Render rest
+        if (!rest.length) {
+          document.getElementById('storiesSection').style.display = 'none';
+          return;
+        }
+        document.getElementById('storiesGrid').innerHTML = rest.map(r => {
+          const url = r.external_url || '#';
+          const date = r.published_at ? new Date(r.published_at).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
+          return `
+            <a href="${url}" ${r.external_url ? 'target="_blank" rel="noopener"' : ''} class="story-card">
+              <div class="story-img">
+                ${r.image_url ? `<img src="${r.image_url}" alt="${r.title}" loading="lazy" />` : `<div style="background:var(--sand);width:100%;height:100%;"></div>`}
+              </div>
+              <div class="story-tag">${r.category || 'Ministry Update'}</div>
+              <div class="story-title">${r.title}</div>
+              <div class="story-meta">${r.author}${date ? ' · ' + date : ''}</div>
+            </a>`;
+        }).join('');
+
+      } catch(e) {
+        document.getElementById('storiesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Stories unavailable right now.</div>';
+        console.warn('Stories load failed', e);
+      }
+    }
+
+    loadStories();
   </script>
 </body>
 </html>
