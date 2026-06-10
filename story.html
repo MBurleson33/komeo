@@ -98,7 +98,7 @@
     .story-hero-bg {
       position: absolute; inset: 0;
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       filter: brightness(0.45);
       transition: background-image 0.3s;
     }
@@ -599,6 +599,7 @@
       if (s.image_url) {
         const bg = document.getElementById('storyHeroBg');
         bg.style.backgroundImage = `url('${s.image_url}')`;
+        bg.style.backgroundPosition = 'center top';
         bg.style.display = 'block';
         document.getElementById('storyHeroFallback').style.display = 'none';
       }
