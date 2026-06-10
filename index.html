@@ -1047,6 +1047,50 @@
       .stats-inner { grid-template-columns: 1fr 1fr; }
       .hero h1 { font-size: 2.4rem; }
     }
+
+    /* ── MOBILE CONTENT FIXES ── */
+    @media (max-width: 768px) {
+
+      /* Mission section - stack vertically */
+      .mission-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+        padding: 3rem 1.5rem !important;
+      }
+      .mission-img {
+        aspect-ratio: 16/9 !important;
+        order: -1;
+      }
+      .mission-img-accent { display: none; }
+
+      /* Help/Get Involved cards - stack to 1 column */
+      .help-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+
+      /* Where We Serve - stack vertically */
+      .where-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+        padding: 3rem 1.5rem !important;
+      }
+
+      /* Testimonials - stack to 1 column */
+      .testimonial-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+
+      /* Section padding */
+      section { padding: 3.5rem 1.5rem !important; }
+
+      /* Stats bar */
+      .stats-inner {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem !important;
+      }
+    }
   </style>
 </head>
 <body>
