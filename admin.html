@@ -20,12 +20,9 @@
 
     /* LOGIN */
     #loginScreen {
-      min-height: 100vh; display: none; align-items: center; justify-content: center;
-      background: var(--deep);
       position: fixed; inset: 0; z-index: 999;
-    }
-    #loginScreen.visible {
-      display: flex;
+      background: var(--deep);
+      align-items: center; justify-content: center;
     }
     .login-box {
       background: var(--white); border-radius: 10px; padding: 2.5rem;
@@ -209,7 +206,7 @@
 <body>
 
 <!-- LOGIN (hidden — triggered by typing "admin") -->
-<div id="loginScreen">
+<div id="loginScreen" style="display:none;">
   <div class="login-box">
     <img src="images/Komeo_Logo_White.webp" alt="Komeo" style="filter:invert(1) brightness(0.3) sepia(1) hue-rotate(170deg) saturate(3);" />
     <h2>Admin Panel</h2>
@@ -221,7 +218,7 @@
 </div>
 
 <!-- ADMIN APP -->
-<div id="adminApp">
+<div id="adminApp" style="display:none;">
 
   <div class="admin-header">
     <div class="admin-header-left">
@@ -602,9 +599,11 @@
   window.addEventListener('DOMContentLoaded', () => {
     const stored = sessionStorage.getItem('komeo_admin');
     if (stored && stored.length > 10) {
-      document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminApp').style.display = 'block';
       loadDashboard();
+    } else {
+      // No valid session — redirect back to home
+      window.location.href = '/index.html';
     }
   });
 
