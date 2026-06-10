@@ -178,17 +178,17 @@
   <div class="progress-section">
     <div class="progress-inner">
       <h2>Buy-A-Brick Campaign</h2>
-      <p>We need to sell 16,000 bricks to complete the four school buildings. Each brick is just $25.</p>
+      <p id="brickDesc">We need to sell 16,000 bricks to complete the four school buildings. Each brick is just $25.</p>
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="progressFill"></div>
       </div>
       <div class="progress-meta">
-        <span><strong>25 bricks sold</strong></span>
-        <span>Goal: <strong>16,000 bricks</strong></span>
+        <span><strong id="bricksSold">25 bricks sold</strong></span>
+        <span>Goal: <strong id="bricksGoal">16,000 bricks</strong></span>
       </div>
-      <div class="brick-price">Each brick = <strong>$25</strong></div>
+      <div class="brick-price" id="brickPrice">Each brick = <strong>$25</strong></div>
       <div class="give-buttons">
-        <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund-brick-campaign" target="_blank" rel="noopener" class="btn-white">Buy a Brick — $25</a>
+        <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund-brick-campaign" target="_blank" rel="noopener" class="btn-white" id="brickBtn">Buy a Brick — $25</a>
         <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund" target="_blank" rel="noopener" class="btn-outline-white">General Building Fund</a>
       </div>
     </div>
@@ -290,12 +290,40 @@
         if (window.innerWidth <= 900) { e.preventDefault(); this.closest('.nav-dropdown').classList.toggle('open'); }
       });
     });
-    // Animate progress bar on load
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('progressFill').style.width = '0.15%';
-      }, 400);
-    });
+
+    // Load building data from Supabase
+    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
+
+    async function loadBuilding() {
+      try {
+        const res = await fetch(`${SB}/rest/v1/komeo_building?id=eq.1`, {
+          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+        });
+        const rows = await res.json();
+        if (!rows.length) return;
+        const b = rows[0];
+        const pct = Math.max((b.bricks_sold / b.bricks_goal) * 100, 0.3);
+
+        document.getElementById('bricksSold').textContent = b.bricks_sold.toLocaleString() + ' bricks sold';
+        document.getElementById('bricksGoal').textContent = b.bricks_goal.toLocaleString() + ' bricks';
+        document.getElementById('brickPrice').innerHTML = `Each brick = <strong>$${b.brick_price}</strong>`;
+        document.getElementById('brickBtn').textContent = `Buy a Brick — $${b.brick_price}`;
+        if (b.description) document.getElementById('brickDesc').textContent = b.description;
+
+        setTimeout(() => {
+          document.getElementById('progressFill').style.width = pct + '%';
+        }, 400);
+      } catch(e) {
+        // Fall back to static values already in HTML
+        setTimeout(() => {
+          document.getElementById('progressFill').style.width = '0.15%';
+        }, 400);
+        console.warn('Building load failed', e);
+      }
+    }
+
+    loadBuilding();
   </script>
 </body>
 </html>
