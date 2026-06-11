@@ -57,7 +57,7 @@
       background: var(--sand);
     }
     .featured-img { aspect-ratio: 4/3; overflow: hidden; }
-    .featured-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.5s; }
+    .featured-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; transition: transform 0.5s; }
     .featured-card:hover .featured-img img { transform: scale(1.03); }
     .featured-body { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
     .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sky); margin-bottom: 0.75rem; }
@@ -73,7 +73,7 @@
     .stories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
     .story-card { text-decoration: none; display: block; }
     .story-img { aspect-ratio: 3/2; overflow: hidden; border-radius: 4px; margin-bottom: 1.1rem; }
-    .story-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.4s; filter: brightness(0.92); }
+    .story-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; transition: transform 0.4s; filter: brightness(0.92); }
     .story-card:hover .story-img img { transform: scale(1.04); filter: brightness(1); }
     .story-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky); margin-bottom: 0.35rem; }
     .story-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--deep); line-height: 1.35; margin-bottom: 0.4rem; }
@@ -256,7 +256,7 @@
       return `
         <a href="${url}" class="story-card">
           <div class="story-img">
-            ${r.image_url ? `<img src="${r.image_url}" alt="${r.title}" loading="lazy" style="object-position:top;" />` : `<div style="background:var(--sand);width:100%;height:100%;"></div>`}
+            ${r.image_url ? `<img src="${r.image_url}" alt="${r.title}" loading="lazy" style="object-position:center 15%;" />` : `<div style="background:var(--sand);width:100%;height:100%;"></div>`}
           </div>
           <div class="story-tag">${r.category || 'Ministry Update'}</div>
           <div class="story-title">${r.title}</div>
