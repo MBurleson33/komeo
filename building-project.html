@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/komeo.css" />
 
   <style>
@@ -67,8 +67,8 @@
     .progress-bar-fill { height: 100%; background: var(--lime); border-radius: 40px; width: 0.15%; transition: width 1.5s ease; }
     .progress-meta { display: flex; justify-content: space-between; font-size: 0.82rem; color: rgba(255,255,255,0.65); }
     .progress-meta strong { color: #fff; }
-    .brick-price { margin-top: 2rem; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: rgba(255,255,255,0.85); }
-    .brick-price strong { color: #fff; font-size: 1.4rem; }
+    .brick-price-label { margin-top: 2rem; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: rgba(255,255,255,0.85); }
+    .brick-price-label strong { color: #fff; font-size: 1.4rem; }
 
     /* GIVE BUTTONS */
     .give-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
@@ -107,9 +107,27 @@
     .brick-inner .eyebrow { color: var(--sky); }
     .brick-inner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: #fff; margin-bottom: 1rem; }
     .brick-inner p { font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.75; margin-bottom: 2rem; }
-    .brick-callout { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 2rem; margin-bottom: 2rem; }
-    .brick-callout .big-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 700; color: var(--lime); line-height: 1; }
-    .brick-callout .big-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.35rem; letter-spacing: 0.08em; }
+    .brick-callout-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 1rem 2rem 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .brick-price-row {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--lime);
+      font-size: 3.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .brick-price-note {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.08em;
+    }
     .btn-lime { display: inline-block; background: var(--lime); color: #fff; text-decoration: none; font-size: 0.95rem; font-weight: 700; padding: 1rem 2.25rem; border-radius: 40px; transition: background 0.2s, transform 0.15s; }
     .btn-lime:hover { background: var(--lime-dark); transform: translateY(-1px); }
 
@@ -156,7 +174,7 @@
       .components-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .brick-section { padding: 3rem 1.5rem; }
-      .brick-callout .big-num { font-size: 2.8rem; line-height: 1.2; letter-spacing: -0.02em; }
+
       .building-section { padding: 3rem 1.5rem; }
       .progress-section { padding: 2.5rem 1.5rem; }
     }
@@ -183,7 +201,7 @@
         <span><strong id="bricksSold">25 bricks sold</strong></span>
         <span>Goal: <strong id="bricksGoal">16,000 bricks</strong></span>
       </div>
-      <div class="brick-price" id="brickPrice">Each brick = <strong>$25</strong></div>
+      <div class="brick-price-label" id="brickPrice">Each brick = <strong>$25</strong></div>
       <div class="give-buttons">
         <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund-brick-campaign" target="_blank" rel="noopener" class="btn-white" id="brickBtn">Buy a Brick — $25</a>
         <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund" target="_blank" rel="noopener" class="btn-outline-white">General Building Fund</a>
@@ -252,10 +270,10 @@
       <p class="eyebrow">Buy-A-Brick Campaign</p>
       <h2>Leave your mark on Sierra Leone</h2>
       <p>Every brick represents a person who said yes to investing in the future of Waterloo's children. For $25, your brick becomes part of a school that will stand for generations.</p>
-      <div class="brick-callout">
-        <div class="big-num">$25</div>
-        <div class="big-label">per brick · 16,000 bricks needed</div>
-      </div>
+      <div class="brick-callout-box">
+          <div class="brick-price-row">$25</div>
+          <div class="brick-price-note">per brick &nbsp;·&nbsp; 16,000 bricks needed</div>
+        </div>
       <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund-brick-campaign" target="_blank" rel="noopener" class="btn-lime">Buy a Brick Today</a>
     </div>
   </div>
