@@ -262,63 +262,6 @@
     <cite>Psalm 127:1</cite>
   </div>
 
-  <script>
-    const nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
-    const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => {
-      const isOpen = links.classList.toggle('open');
-      // Animate hamburger to X
-      const spans = toggle.querySelectorAll('span');
-      if (isOpen) {
-        spans[0].style.cssText = 'transform: translateY(7px) rotate(45deg);';
-        spans[1].style.cssText = 'opacity: 0;';
-        spans[2].style.cssText = 'transform: translateY(-7px) rotate(-45deg);';
-      } else {
-        spans.forEach(s => s.style.cssText = '');
-      }
-    });
-    document.querySelectorAll('.nav-dropdown > a').forEach(a => {
-      a.addEventListener('click', function(e) {
-        if (window.innerWidth <= 900) { e.preventDefault(); this.closest('.nav-dropdown').classList.toggle('open'); }
-      });
-    });
-
-    // Load building data from Supabase
-    const SB = 'https://mnyarbqxyynysoqiwtnh.supabase.co';
-    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
-
-    async function loadBuilding() {
-      try {
-        const res = await fetch(`${SB}/rest/v1/komeo_building?id=eq.1`, {
-          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
-        });
-        const rows = await res.json();
-        if (!rows.length) return;
-        const b = rows[0];
-        const pct = Math.max((b.bricks_sold / b.bricks_goal) * 100, 0.3);
-
-        document.getElementById('bricksSold').textContent = b.bricks_sold.toLocaleString() + ' bricks sold';
-        document.getElementById('bricksGoal').textContent = b.bricks_goal.toLocaleString() + ' bricks';
-        document.getElementById('brickPrice').innerHTML = `Each brick = <strong>$${b.brick_price}</strong>`;
-        document.getElementById('brickBtn').textContent = `Buy a Brick — $${b.brick_price}`;
-        if (b.description) document.getElementById('brickDesc').textContent = b.description;
-
-        setTimeout(() => {
-          document.getElementById('progressFill').style.width = pct + '%';
-        }, 400);
-      } catch(e) {
-        // Fall back to static values already in HTML
-        setTimeout(() => {
-          document.getElementById('progressFill').style.width = '0.15%';
-        }, 400);
-        console.warn('Building load failed', e);
-      }
-    }
-
-    loadBuilding();
-  </script>
   <script src="/admin-trigger.js"></script>
 
 
