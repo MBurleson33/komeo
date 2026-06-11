@@ -268,11 +268,16 @@
         let query = `published=eq.true&order=published_at.desc&limit=${PAGE_SIZE}&offset=${offset}`;
         if (featuredId) query += `&id=neq.${featuredId}`;
 
-        const res = await fetch(`${SB}/rest/v1/komeo_stories?${query}`, {
+        // First fetch: get total count
+        const countRes = await fetch(`${SB}/rest/v1/komeo_stories?${query}&select=id`, {
           headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}`, 'Prefer': 'count=exact' }
         });
+        const total = parseInt(countRes.headers.get('content-range')?.split('/')[1] || '-1');
 
-        const total = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
+        // Second fetch: get actual rows
+        const res = await fetch(`${SB}/rest/v1/komeo_stories?${query}`, {
+          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+        });
         const rows = await res.json();
         const grid = document.getElementById('storiesGrid');
 
@@ -280,6 +285,9 @@
           grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">No stories yet.</div>';
           return;
         }
+
+        // Clear loading message on first load
+        if (offset === 0) grid.innerHTML = '';
 
         // Append cards
         rows.forEach(r => {
@@ -289,12 +297,10 @@
         offset += rows.length;
 
         // Show/hide load more button
-        const shown = offset;
-        const remaining = total - shown;
-
         if (loadMoreBtn) {
+          const remaining = total > 0 ? total - offset : (rows.length === PAGE_SIZE ? 1 : 0);
           if (remaining > 0) {
-            loadMoreBtn.textContent = `Load More Stories (${remaining} more)`;
+            loadMoreBtn.textContent = total > 0 ? `Load More Stories (${remaining} more)` : 'Load More Stories';
             loadMoreBtn.style.display = 'inline-block';
           } else {
             loadMoreBtn.style.display = 'none';
