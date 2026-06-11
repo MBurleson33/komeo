@@ -242,6 +242,14 @@
     let featuredId = null;
     let loading = false;
 
+    async function sbFetch(path) {
+      const res = await fetch(`${SB}/rest/v1/${path}`, {
+        headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
+      });
+      if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+      return res.json();
+    }
+
     function storyCardHTML(r) {
       const url = r.slug ? `story.html?slug=${encodeURIComponent(r.slug)}` : '#';
       const date = r.published_at ? new Date(r.published_at).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
@@ -259,48 +267,30 @@
     async function loadStories() {
       if (loading) return;
       loading = true;
-
+      const grid = document.getElementById('storiesGrid');
       const loadMoreBtn = document.getElementById('loadMoreBtn');
-      if (loadMoreBtn) loadMoreBtn.textContent = 'Loading…';
 
       try {
-        // Build query — exclude featured story, paginate the rest
         let query = `published=eq.true&order=published_at.desc&limit=${PAGE_SIZE}&offset=${offset}`;
         if (featuredId) query += `&id=neq.${featuredId}`;
 
-        // First fetch: get total count
-        const countRes = await fetch(`${SB}/rest/v1/komeo_stories?${query}&select=id`, {
-          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}`, 'Prefer': 'count=exact' }
-        });
-        const total = parseInt(countRes.headers.get('content-range')?.split('/')[1] || '-1');
+        const rows = await sbFetch(`komeo_stories?${query}`);
 
-        // Second fetch: get actual rows
-        const res = await fetch(`${SB}/rest/v1/komeo_stories?${query}`, {
-          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
-        });
-        const rows = await res.json();
-        const grid = document.getElementById('storiesGrid');
+        // Clear loading placeholder on first batch
+        if (offset === 0) grid.innerHTML = '';
 
         if (!rows.length && offset === 0) {
           grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">No stories yet.</div>';
+          if (loadMoreBtn) loadMoreBtn.style.display = 'none';
           return;
         }
 
-        // Clear loading message on first load
-        if (offset === 0) grid.innerHTML = '';
-
-        // Append cards
-        rows.forEach(r => {
-          grid.insertAdjacentHTML('beforeend', storyCardHTML(r));
-        });
-
+        rows.forEach(r => grid.insertAdjacentHTML('beforeend', storyCardHTML(r)));
         offset += rows.length;
 
-        // Show/hide load more button
         if (loadMoreBtn) {
-          const remaining = total > 0 ? total - offset : (rows.length === PAGE_SIZE ? 1 : 0);
-          if (remaining > 0) {
-            loadMoreBtn.textContent = total > 0 ? `Load More Stories (${remaining} more)` : 'Load More Stories';
+          if (rows.length === PAGE_SIZE) {
+            loadMoreBtn.textContent = 'Load More Stories';
             loadMoreBtn.style.display = 'inline-block';
           } else {
             loadMoreBtn.style.display = 'none';
@@ -310,20 +300,20 @@
       } catch(e) {
         console.warn('Stories load failed', e);
         if (offset === 0) {
-          document.getElementById('storiesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Stories unavailable right now.</div>';
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Stories unavailable right now.</div>';
         }
       } finally {
         loading = false;
+        if (loadMoreBtn && loadMoreBtn.textContent === 'Loading…') {
+          loadMoreBtn.textContent = 'Load More Stories';
+        }
       }
     }
 
     async function loadFeatured() {
       try {
-        const res = await fetch(`${SB}/rest/v1/komeo_stories?published=eq.true&order=published_at.desc`, {
-          headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
-        });
-        const rows = await res.json();
-        if (!rows.length) return;
+        const rows = await sbFetch('komeo_stories?published=eq.true&order=published_at.desc');
+        if (!rows.length) { loadStories(); return; }
 
         const featured = rows.find(r => r.featured) || rows[0];
         featuredId = featured.id;
