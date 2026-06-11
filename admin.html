@@ -560,7 +560,19 @@
       <div class="field"><label>Sort Order</label><input type="number" id="teamOrder" value="0" min="0" /></div>
     </div>
     <div class="form-row">
-      <div class="field"><label>Photo URL (optional)</label><input type="text" id="teamImage" placeholder="images/headshot.webp" /></div>
+      <div class="field">
+        <label>Photo</label>
+        <div class="img-upload-wrap">
+          <input type="text" id="teamImage" placeholder="images/headshot.webp or paste URL" />
+          <button type="button" class="upload-btn" onclick="document.getElementById('teamImageFile').click()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload
+          </button>
+          <input type="file" id="teamImageFile" class="hidden-file" accept="image/*" onchange="uploadTeamImage(this)" />
+        </div>
+        <div class="upload-progress" id="teamUploadProgress"><div class="upload-progress-fill" id="teamUploadFill"></div></div>
+        <div class="upload-preview" id="teamImagePreview"><img id="teamImagePreviewImg" src="" alt="Preview" /></div>
+      </div>
       <div class="field"><label>Initials (if no photo)</label><input type="text" id="teamInitials" placeholder="JD" maxlength="3" /></div>
     </div>
     <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;cursor:pointer;margin-bottom:1rem;">
@@ -900,6 +912,13 @@
     document.getElementById('teamGroup').value = r?.group_type || 'board';
     document.getElementById('teamOrder').value = r?.sort_order || 0;
     document.getElementById('teamImage').value = r?.image_url || '';
+    // Preview
+    document.getElementById('teamImagePreview').style.display = 'none';
+    document.getElementById('teamImagePreviewImg').src = '';
+    if (r?.image_url) {
+      document.getElementById('teamImagePreviewImg').src = r.image_url;
+      document.getElementById('teamImagePreview').style.display = 'block';
+    }
     document.getElementById('teamInitials').value = r?.initials || '';
     document.getElementById('teamPublished').checked = r ? r.published : true;
     openModal('teamModal');
@@ -1062,6 +1081,46 @@
     } catch(e) { toast('Error saving', 'error'); }
   }
 
+  // ── TEAM IMAGE UPLOAD ──
+  async function uploadTeamImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const progress = document.getElementById('teamUploadProgress');
+    const fill = document.getElementById('teamUploadFill');
+    const btn = input.previousElementSibling;
+    progress.style.display = 'block';
+    fill.style.width = '0%';
+    btn.disabled = true;
+    btn.textContent = 'Uploading…';
+    try {
+      const ext = file.name.split('.').pop().toLowerCase();
+      const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase();
+      const filename = `team/${base}-${Date.now()}.${ext}`;
+      let pct = 0;
+      const ticker = setInterval(() => { pct = Math.min(pct + 8, 60); fill.style.width = pct + '%'; }, 100);
+      const res = await fetch(`${SB_STORAGE}/object/${BUCKET}/${filename}`, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': file.type, 'x-upsert': 'true' },
+        body: file,
+      });
+      clearInterval(ticker);
+      if (!res.ok) throw new Error(await res.text());
+      fill.style.width = '100%';
+      const publicUrl = `${SB_STORAGE}/object/public/${BUCKET}/${filename}`;
+      document.getElementById('teamImage').value = publicUrl;
+      document.getElementById('teamImagePreviewImg').src = publicUrl;
+      document.getElementById('teamImagePreview').style.display = 'block';
+      toast('Photo uploaded!');
+    } catch(e) {
+      toast('Upload failed: ' + e.message, 'error');
+    } finally {
+      setTimeout(() => { progress.style.display = 'none'; fill.style.width = '0%'; }, 1000);
+      btn.disabled = false;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload`;
+      input.value = '';
+    }
+  }
+
   // ── IMAGE UPLOAD ──
   const SB_STORAGE = 'https://mnyarbqxyynysoqiwtnh.supabase.co/storage/v1';
   const BUCKET = 'komeo-images';
@@ -1142,6 +1201,18 @@
 
   // Show preview when URL is typed manually
   document.addEventListener('DOMContentLoaded', () => {
+    // Team image URL preview
+    const teamImgInput = document.getElementById('teamImage');
+    if (teamImgInput) {
+      teamImgInput.addEventListener('input', () => {
+        const val = teamImgInput.value.trim();
+        const preview = document.getElementById('teamImagePreview');
+        const previewImg = document.getElementById('teamImagePreviewImg');
+        if (val) { previewImg.src = val; preview.style.display = 'block'; }
+        else { preview.style.display = 'none'; }
+      });
+    }
+
     const imgInput = document.getElementById('storyImage');
     if (imgInput) {
       imgInput.addEventListener('input', () => {
