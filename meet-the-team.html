@@ -129,29 +129,72 @@
       margin-bottom: 3rem;
     }
 
-    /* ── LEADERSHIP ROW (founders + president + chair) ── */
-    .leadership-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.5rem;
+    /* ── TEAM LAYOUT ── */
+    .team-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem 6rem;
+    }
+
+    .team-group {
       margin-bottom: 5rem;
     }
 
-    .leader-card {
+    .team-group-header {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
     }
 
+    .team-group-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--deep);
+    }
+
+    .team-group-header .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 0;
+    }
+
+    /* Leadership — large feature cards */
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .leader-card {
+      background: var(--white);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      transition: background 0.2s;
+    }
+
+    .leader-card:hover { background: var(--sand); }
+
     .leader-photo {
-      width: 180px;
-      height: 180px;
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
       border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 1.25rem;
-      border: 4px solid var(--sand);
-      box-shadow: 0 8px 32px rgba(26,46,59,0.12);
+      border: 2px solid var(--sand);
       flex-shrink: 0;
     }
 
@@ -168,51 +211,51 @@
 
     .leader-photo.placeholder span {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem; font-weight: 700;
-      color: rgba(255,255,255,0.8);
+      font-size: 1.3rem; font-weight: 700;
+      color: rgba(255,255,255,0.9);
     }
+
+    .leader-info { flex: 1; min-width: 0; }
 
     .leader-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; font-weight: 700;
-      color: var(--deep); margin-bottom: 0.3rem;
+      font-size: 1rem; font-weight: 700;
+      color: var(--deep); margin-bottom: 0.2rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     .leader-role {
-      font-size: 0.8rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--sky);
     }
 
-    /* ── DIVIDER ── */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin-bottom: 4rem;
-    }
-
-    /* ── BOARD GRID ── */
+    /* Board — compact pill cards */
     .board-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2.5rem 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
     }
 
     .board-card {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--sand);
+      border-radius: 6px;
+      transition: background 0.2s;
     }
 
+    .board-card:hover { background: #ede7dc; }
+
     .board-photo {
-      width: 130px;
-      height: 130px;
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
       border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 1rem;
-      border: 3px solid var(--sand);
-      box-shadow: 0 4px 16px rgba(26,46,59,0.1);
+      border: 2px solid rgba(255,255,255,0.8);
       flex-shrink: 0;
     }
 
@@ -229,63 +272,81 @@
 
     .board-photo.placeholder span {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem; font-weight: 700;
-      color: rgba(255,255,255,0.7);
+      font-size: 1rem; font-weight: 700;
+      color: rgba(255,255,255,0.8);
     }
 
     .board-name {
-      font-weight: 600; font-size: 0.97rem;
-      color: var(--deep); margin-bottom: 0.2rem;
+      font-weight: 600; font-size: 0.92rem;
+      color: var(--deep);
     }
 
     .board-role {
-      font-size: 0.76rem; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted);
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.1rem;
     }
 
-    /* ── NEXT GEN SECTION ── */
+    /* Next gen */
     .nextgen {
-      background: var(--sand);
-      padding: 5rem 2.5rem;
+      background: var(--deep);
+      padding: 4rem 2.5rem;
     }
 
     .nextgen-inner {
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
+      display: flex;
       align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .nextgen-text {
+      flex: 1;
+      min-width: 260px;
     }
 
     .nextgen-text .section-eyebrow { color: var(--sky); }
+    .nextgen-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 700; color: #fff;
+      margin: 0.5rem 0 0.75rem;
+    }
+    .nextgen-text p { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
 
-    .nextgen-text p {
-      font-size: 1rem; color: var(--muted);
-      line-height: 1.75; margin-top: 1rem;
+    .nextgen-cards {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
 
     .nextgen-card {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
+      gap: 1rem;
+      background: rgba(255,255,255,0.07);
+      border-radius: 6px;
+      padding: 1rem 1.5rem;
     }
 
     .nextgen-photo {
-      width: 160px; height: 160px;
+      width: 56px; height: 56px;
       border-radius: 50%; overflow: hidden;
-      margin-bottom: 1.25rem;
-      border: 4px solid var(--white);
-      box-shadow: 0 8px 32px rgba(26,46,59,0.12);
+      border: 2px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
     }
-
     .nextgen-photo img {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
+      object-fit: cover; object-position: center top; display: block;
     }
+
+    .nextgen-name { font-weight: 600; font-size: 0.95rem; color: #fff; }
+    .nextgen-role { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--border); margin-bottom: 3rem; }
 
     /* ── SCRIPTURE ── */
     .scripture-band {
@@ -352,8 +413,8 @@
     /* ── MOBILE ── */
     @media (max-width: 960px) {
       .leadership-grid { grid-template-columns: repeat(2, 1fr); }
-      .board-grid { grid-template-columns: repeat(3, 1fr); }
-      .nextgen-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .board-grid { grid-template-columns: repeat(2, 1fr); }
+      .nextgen-inner { flex-direction: column; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       nav { padding: 0 1.5rem; }
       .nav-links { display: none; }
@@ -414,8 +475,9 @@
 
     @media (max-width: 640px) {
       .leadership-grid { grid-template-columns: 1fr; }
-      .board-grid { grid-template-columns: repeat(2, 1fr); }
+      .board-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
+      .team-section { padding: 3rem 1.5rem 4rem; }
     }
   </style>
 </head>
@@ -434,32 +496,40 @@
     <p>The people in Oklahoma City and Sierra Leone who make this ministry possible — united by a calling to care for orphans and share the Gospel.</p>
   </div>
 
-  <!-- LEADERSHIP -->
-  <div class="section-wrap">
-    <p class="section-eyebrow">Leadership</p>
-    <h2 class="section-title">Founders &amp; Staff</h2>
-    <div class="leadership-grid" id="leadershipGrid">
-      <!-- loaded from Supabase -->
+  <!-- TEAM -->
+  <div class="team-section">
+
+    <div class="team-group">
+      <div class="team-group-header">
+        <span class="eyebrow">Leadership</span>
+        <h2>Founders &amp; Staff</h2>
+      </div>
+      <div class="leadership-grid" id="leadershipGrid">
+        <!-- loaded from Supabase -->
+      </div>
     </div>
 
-    <hr class="divider" />
-
-    <p class="section-eyebrow">Board of Directors</p>
-    <h2 class="section-title">Board Members</h2>
-    <div class="board-grid" id="boardGrid">
-      <!-- loaded from Supabase -->
+    <div class="team-group">
+      <div class="team-group-header">
+        <span class="eyebrow">Board of Directors</span>
+        <h2>Board Members</h2>
+      </div>
+      <div class="board-grid" id="boardGrid">
+        <!-- loaded from Supabase -->
+      </div>
     </div>
+
   </div>
 
-  <!-- NEXT GEN -->  <!-- NEXT GEN -->
+  <!-- NEXT GEN -->
   <div class="nextgen" id="nextgenSection">
     <div class="nextgen-inner">
       <div class="nextgen-text">
         <p class="section-eyebrow">Next Generation</p>
-        <h2 class="section-title" style="margin-bottom: 0;">Raising up the next generation of leaders</h2>
+        <h2>Raising up the next generation of leaders</h2>
         <p>Komeo isn't just caring for children today — we're investing in the future leaders of Sierra Leone. Our Next Gen Board ensures the ministry will continue to grow and impact lives for generations to come.</p>
       </div>
-      <div id="nextgenGrid" style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+      <div class="nextgen-cards" id="nextgenGrid">
         <!-- loaded from Supabase -->
       </div>
     </div>
@@ -488,20 +558,32 @@
     const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueWFyYnF4eXlueXNvcWl3dG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNzI3NjYsImV4cCI6MjA5NjY0ODc2Nn0.0Yi-nTtH6EWh66afXhW1dpeGezwEn8JMRALgG_pk9DY';
 
     function memberCard(r, size = 'leader') {
-      const photoSize = size === 'leader' ? '180px' : '130px';
       const nameClass = size === 'leader' ? 'leader-name' : 'board-name';
       const roleClass = size === 'leader' ? 'leader-role' : 'board-role';
       const initials = r.initials || r.name.split(' ').map(n=>n[0]).join('').slice(0,2);
-      return `
-        <div class="${size}-card" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-          <div class="${size}-photo ${r.image_url ? '' : 'placeholder'}" style="width:${photoSize};height:${photoSize};">
-            ${r.image_url
-              ? `<img src="${r.image_url.startsWith('http') ? r.image_url : (r.image_url.startsWith('/') ? r.image_url : '/' + r.image_url)}" alt="${r.name}" loading="lazy" />`
-              : `<span>${initials}</span>`}
-          </div>
-          <div class="${nameClass}">${r.name}</div>
-          <div class="${roleClass}">${r.role}</div>
-        </div>`;
+      const imgSrc = r.image_url ? (r.image_url.startsWith('http') ? r.image_url : (r.image_url.startsWith('/') ? r.image_url : '/' + r.image_url)) : null;
+      const photoHtml = imgSrc
+        ? `<img src="${imgSrc}" alt="${r.name}" loading="lazy" />`
+        : `<span>${initials}</span>`;
+      if (size === 'leader') {
+        return `
+          <div class="leader-card">
+            <div class="leader-photo ${imgSrc ? '' : 'placeholder'}">${photoHtml}</div>
+            <div class="leader-info">
+              <div class="leader-name">${r.name}</div>
+              <div class="leader-role">${r.role}</div>
+            </div>
+          </div>`;
+      } else {
+        return `
+          <div class="board-card">
+            <div class="board-photo ${imgSrc ? '' : 'placeholder'}">${photoHtml}</div>
+            <div>
+              <div class="board-name">${r.name}</div>
+              <div class="board-role">${r.role}</div>
+            </div>
+          </div>`;
+      }
     }
 
     async function loadTeam() {
@@ -519,14 +601,20 @@
         if (leadership.length) document.getElementById('leadershipGrid').innerHTML = leadership.map(r => memberCard(r, 'leader')).join('');
         if (board.length) document.getElementById('boardGrid').innerHTML = board.map(r => memberCard(r, 'board')).join('');
         if (nextgen.length) {
-          document.getElementById('nextgenGrid').innerHTML = nextgen.map(r => `
-            <div class="nextgen-card">
-              <div class="nextgen-photo">
-                ${r.image_url ? `<img src="${r.image_url.startsWith('http') ? r.image_url : (r.image_url.startsWith('/') ? r.image_url : '/' + r.image_url)}" alt="${r.name}" loading="lazy" />` : `<div style="background:var(--sky);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:rgba(255,255,255,0.8);">${(r.initials || r.name.split(' ').map(n=>n[0]).join('').slice(0,2))}</div>`}
-              </div>
-              <div class="leader-name">${r.name}</div>
-              <div class="leader-role" style="margin-top:0.3rem;">${r.role}</div>
-            </div>`).join('');
+          document.getElementById('nextgenGrid').innerHTML = nextgen.map(r => {
+            const src = r.image_url ? (r.image_url.startsWith('http') ? r.image_url : (r.image_url.startsWith('/') ? r.image_url : '/' + r.image_url)) : null;
+            const initials = r.initials || r.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+            return `
+              <div class="nextgen-card">
+                <div class="nextgen-photo">
+                  ${src ? `<img src="${src}" alt="${r.name}" loading="lazy" />` : `<div style="background:var(--sky);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:1rem;">${initials}</div>`}
+                </div>
+                <div>
+                  <div class="nextgen-name">${r.name}</div>
+                  <div class="nextgen-role">${r.role}</div>
+                </div>
+              </div>`;
+          }).join('');
         }
       } catch(e) { console.warn('Team load failed', e); }
     }
