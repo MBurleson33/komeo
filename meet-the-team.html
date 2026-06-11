@@ -170,11 +170,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+      padding-right: 2rem;
     }
 
     .leader-card {
       position: relative;
       cursor: default;
+      overflow: visible;
     }
 
     .leader-photo {
@@ -216,28 +218,29 @@
     /* Name box overlay — bottom left, sky blue border */
     .leader-info {
       position: absolute;
-      bottom: -1rem;
-      left: 1.25rem;
+      bottom: 1.5rem;
+      right: -1.5rem;
       background: var(--white);
       border: 2px solid var(--sky);
-      padding: 0.75rem 1rem;
-      min-width: 160px;
-      max-width: 80%;
+      padding: 1rem 1.25rem;
+      min-width: 180px;
+      max-width: 75%;
+      z-index: 2;
     }
 
     .leader-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--deep);
-      line-height: 1.2;
-      margin-bottom: 0.2rem;
+      line-height: 1.15;
+      margin-bottom: 0.3rem;
     }
 
     .leader-role {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--sky);
     }
@@ -247,11 +250,13 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
+      padding-right: 2rem;
     }
 
     .board-card {
       position: relative;
       cursor: default;
+      overflow: visible;
     }
 
     .board-photo {
@@ -292,28 +297,29 @@
 
     .board-info {
       position: absolute;
-      bottom: -1rem;
-      left: 0.75rem;
+      bottom: 1.25rem;
+      right: -1.25rem;
       background: var(--white);
       border: 2px solid var(--sky);
-      padding: 0.5rem 0.75rem;
-      min-width: 120px;
-      max-width: 85%;
+      padding: 0.75rem 1rem;
+      min-width: 140px;
+      max-width: 75%;
+      z-index: 2;
     }
 
     .board-name {
       font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--deep);
-      line-height: 1.2;
-      margin-bottom: 0.15rem;
+      line-height: 1.15;
+      margin-bottom: 0.2rem;
     }
 
     .board-role {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--sky);
     }
@@ -350,6 +356,7 @@
 
     .nextgen-card {
       position: relative;
+      overflow: visible;
     }
 
     .nextgen-photo {
@@ -368,13 +375,14 @@
 
     .nextgen-info {
       position: absolute;
-      bottom: -1rem;
-      left: 0.75rem;
+      bottom: 1.25rem;
+      right: -1.25rem;
       background: var(--deep);
       border: 2px solid var(--sky);
-      padding: 0.5rem 0.75rem;
-      min-width: 120px;
-      max-width: 85%;
+      padding: 0.75rem 1rem;
+      min-width: 140px;
+      max-width: 75%;
+      z-index: 2;
     }
 
     .nextgen-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 0.15rem; }
