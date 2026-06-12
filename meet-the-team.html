@@ -185,15 +185,16 @@
       z-index: 1;
     }
     .nextgen-inner {
-      max-width: 1200px; margin: 0 auto;
+      max-width: 900px; margin: 0 auto;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      text-align: center;
-      gap: 3rem;
+      justify-content: center;
+      gap: 5rem;
     }
     .nextgen-text {
-      max-width: 600px;
+      flex: 1;
+      max-width: 400px;
     }
     .nextgen-text .section-eyebrow { color: var(--sky); margin-bottom: 0.5rem; display: block; }
     .nextgen-text h2 {
@@ -201,14 +202,14 @@
       font-size: clamp(1.4rem, 2.5vw, 1.9rem);
       font-weight: 700; color: #fff; margin-bottom: 0.75rem;
     }
-    .nextgen-text p { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.7; text-align: center; }
+    .nextgen-text p { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
 
     .nextgen-cards {
       display: flex; flex-wrap: wrap;
       gap: 2rem;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: flex-start;
-      padding: 0 1.5rem 1rem;
+      padding: 0 2rem 1rem 0;
     }
 
     .nextgen-card {
@@ -271,7 +272,7 @@
     @media (max-width: 960px) {
       .leadership-grid { grid-template-columns: repeat(2, 1fr); }
       .board-grid { grid-template-columns: repeat(2, 1fr); }
-      .nextgen-inner { gap: 2rem; }
+      .nextgen-inner { flex-direction: column; gap: 2.5rem; }
       .nextgen-cards { padding-right: 1.5rem; }
     }
     @media (max-width: 540px) {
