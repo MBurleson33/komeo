@@ -300,7 +300,8 @@
       .faq-section { padding: 4rem 1.5rem 5rem; }
     }
     @media (max-width: 540px) {
-      .photo-mosaic { grid-template-columns: 1fr; }
+      .photo-mosaic { grid-template-columns: 1fr 1fr; }
+      .hide-mobile { display: none; }
       .footer-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -345,7 +346,7 @@
     <div class="mosaic-img">
       <img src="images/IMG_7196+12.webp" alt="Children at the orphanage" loading="lazy" />
     </div>
-    <div class="mosaic-img">
+    <div class="mosaic-img hide-mobile">
       <img src="images/unnamed+6a-3.webp" alt="Community outreach" loading="lazy" />
     </div>
   </div>
