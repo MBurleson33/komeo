@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Our Beliefs — Komeo International Ministries</title>
-  <meta property="og:image" content="https://komeo.org/images/banner+photo+8.19.23+cropped+2.webp" />
+  <meta property="og:image" content="https://komeo.org/images/home-hero.webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:site_name" content="Komeo International Ministries" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://komeo.org/images/banner+photo+8.19.23+cropped+2.webp" />
+  <meta name="twitter:image" content="https://komeo.org/images/home-hero.webp" />
   <meta name="description" content="The core beliefs that guide Komeo International Ministries — rooted in Scripture and centered on the Gospel of Jesus Christ." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,7 +51,20 @@
     .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
 
     /* PAGE HERO */
-    .page-hero { margin-top: var(--nav-h); background: var(--deep); padding: 5rem 2.5rem 4.5rem; text-align: center; }
+    .page-hero {
+      margin-top: var(--nav-h);
+      position: relative;
+      min-height: 52vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('/images/our-beliefs-hero.webp');
+      background-size: cover; background-position: center center;
+      filter: brightness(0.45);
+    }
     .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
     .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
     .breadcrumb a:hover { color: rgba(255,255,255,0.75); }
@@ -193,12 +206,19 @@
       .footer-grid { grid-template-columns: 1fr; }
       .beliefs-wrap { padding: 4rem 1.5rem 5rem; }
     }
+    .page-hero-content {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1200px;
+      margin: 0 auto; padding: 0 2.5rem 3.5rem;
+    }
   </style>
 </head>
 <body>
 
   <!-- PAGE HERO -->
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
     <div class="breadcrumb">
       <a href="index.html">Home</a><span>/</span>
       <span>About</span><span>/</span>
@@ -282,7 +302,8 @@
       </div>
 
     </div>
-  </div>
+    </div>
+</div>
 
   <!-- SCRIPTURE -->
   <div class="scripture-band">
