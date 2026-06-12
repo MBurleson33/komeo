@@ -349,7 +349,7 @@
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 5rem;
-      align-items: start;
+      align-items: center;
     }
 
     .nextgen-text-col .section-eyebrow { color: var(--sky); margin-bottom: 0.5rem; }
@@ -366,6 +366,7 @@
       flex-wrap: wrap;
       gap: 2rem;
       align-items: flex-start;
+      padding-right: 1.5rem;
     }
 
     .nextgen-card {
@@ -390,11 +391,15 @@
     .nextgen-card:hover .nextgen-photo img { filter: grayscale(0%); transform: scale(1.03); }
 
     .nextgen-info {
-      position: relative;
+      position: absolute;
+      bottom: 1.25rem;
+      right: -1rem;
       background: var(--deep);
-      border-top: 2px solid var(--sky);
+      border: 2px solid var(--sky);
       padding: 0.65rem 0.85rem;
-      margin-top: 0.75rem;
+      min-width: 140px;
+      max-width: 85%;
+      z-index: 2;
     }
 
     .nextgen-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 0.15rem; }
