@@ -186,8 +186,14 @@
     }
     .nextgen-inner {
       max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 2fr;
-      gap: 5rem; align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 3rem;
+    }
+    .nextgen-text {
+      max-width: 600px;
     }
     .nextgen-text .section-eyebrow { color: var(--sky); margin-bottom: 0.5rem; display: block; }
     .nextgen-text h2 {
@@ -195,12 +201,14 @@
       font-size: clamp(1.4rem, 2.5vw, 1.9rem);
       font-weight: 700; color: #fff; margin-bottom: 0.75rem;
     }
-    .nextgen-text p { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+    .nextgen-text p { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.7; text-align: center; }
 
     .nextgen-cards {
       display: flex; flex-wrap: wrap;
-      gap: 2rem; align-items: flex-start;
-      padding: 1rem 2rem 1rem 0; /* breathing room for box bleed */
+      gap: 2rem;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 1.5rem 1rem;
     }
 
     .nextgen-card {
@@ -263,7 +271,7 @@
     @media (max-width: 960px) {
       .leadership-grid { grid-template-columns: repeat(2, 1fr); }
       .board-grid { grid-template-columns: repeat(2, 1fr); }
-      .nextgen-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nextgen-inner { gap: 2rem; }
       .nextgen-cards { padding-right: 1.5rem; }
     }
     @media (max-width: 540px) {
