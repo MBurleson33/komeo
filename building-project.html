@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Building Project — Komeo International Ministries</title>
-  <meta property="og:image" content="https://komeo.org/images/banner+photo+8.19.23+cropped+2.webp" />
+  <meta property="og:image" content="https://komeo.org/images/home-hero.webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:site_name" content="Komeo International Ministries" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://komeo.org/images/banner+photo+8.19.23+cropped+2.webp" />
+  <meta name="twitter:image" content="https://komeo.org/images/home-hero.webp" />
   <meta name="description" content="Help us build a school and community center for the people of Waterloo, Sierra Leone. Buy a brick for $25 and be part of something lasting." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,7 +51,20 @@
     .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
 
     /* PAGE HERO */
-    .page-hero { margin-top: var(--nav-h); background: var(--deep); padding: 5rem 2.5rem 4.5rem; text-align: center; }
+    .page-hero {
+      margin-top: var(--nav-h);
+      position: relative;
+      min-height: 52vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('/images/building-project-hero.webp');
+      background-size: cover; background-position: center center;
+      filter: brightness(0.45);
+    }
     .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
     .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
     .breadcrumb a:hover { color: rgba(255,255,255,0.75); }
@@ -178,12 +191,19 @@
       .building-section { padding: 3rem 1.5rem; }
       .progress-section { padding: 2.5rem 1.5rem; }
     }
+    .page-hero-content {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1200px;
+      margin: 0 auto; padding: 0 2.5rem 3.5rem;
+    }
   </style>
 </head>
 <body>
 
   <!-- HERO -->
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span style="color:rgba(255,255,255,0.6)">Building Project</span></div>
     <h1>Komeo School &amp;<br>Community Center</h1>
     <p class="subtitle">Construction is underway on a school and community center for the people of Waterloo, Sierra Leone — and we need your help to finish it.</p>
@@ -207,7 +227,8 @@
         <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund" target="_blank" rel="noopener" class="btn-outline-white">General Building Fund</a>
       </div>
     </div>
-  </div>
+    </div>
+</div>
 
   <!-- ABOUT -->
   <div class="about-section">
@@ -221,7 +242,8 @@
     <div class="about-img">
       <img src="images/BuildingProject1.webp" alt="Building project in Sierra Leone" loading="lazy" />
     </div>
-  </div>
+    </div>
+</div>
 
   <!-- PHOTO MOSAIC -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--deep);">
@@ -231,7 +253,8 @@
     <div style="aspect-ratio:4/3;overflow:hidden;"><img src="images/BuildingProject5.webp" alt="Building project" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.9);transition:filter 0.3s;" onmouseover="this.style.filter='brightness(1)'" onmouseout="this.style.filter='brightness(0.9)'" loading="lazy" /></div>
     <div style="aspect-ratio:4/3;overflow:hidden;"><img src="images/BuildingProject10.webp" alt="Building project" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.9);transition:filter 0.3s;" onmouseover="this.style.filter='brightness(1)'" onmouseout="this.style.filter='brightness(0.9)'" loading="lazy" /></div>
     <div style="aspect-ratio:4/3;overflow:hidden;"><img src="images/IMG_6013.webp" alt="Building project" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.9);transition:filter 0.3s;" onmouseover="this.style.filter='brightness(1)'" onmouseout="this.style.filter='brightness(0.9)'" loading="lazy" /></div>
-  </div>
+    </div>
+</div>
 
   <!-- WHAT WE'RE BUILDING -->
   <div class="building-section">
@@ -262,7 +285,8 @@
         <div class="component-item"><div class="component-dot"></div><span>Security Fencing</span></div>
       </div>
     </div>
-  </div>
+    </div>
+</div>
 
   <!-- BRICK CTA -->
   <div class="brick-section">
@@ -276,7 +300,8 @@
         </div>
       <a href="https://komeo.reachapp.co/donations/new?campaign_id=building-fund-brick-campaign" target="_blank" rel="noopener" class="btn-lime">Buy a Brick Today</a>
     </div>
-  </div>
+    </div>
+</div>
 
   <!-- SCRIPTURE -->
   <div class="scripture-band">
