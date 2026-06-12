@@ -29,7 +29,6 @@
         <li class="nav-dropdown">
           <a href="#" onclick="return false;">Get Involved</a>
           <div class="dropdown-menu">
-            <a href="/sponsor.html">Sponsorship</a>
             <a href="/mission-teams.html">Mission Teams</a>
             <a href="/missionary-support.html">Missionary Support</a>
             <a href="/outreach-efforts.html">Outreach Efforts</a>
