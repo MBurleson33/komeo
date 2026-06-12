@@ -41,7 +41,20 @@
     .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
     .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
 
-    .page-hero { margin-top: var(--nav-h); background: var(--deep); padding: 5rem 2.5rem 4.5rem; text-align: center; }
+    .page-hero {
+      margin-top: var(--nav-h);
+      position: relative;
+      min-height: 52vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('/images/other-opportunities-hero.webp');
+      background-size: cover; background-position: center center;
+      filter: brightness(0.45);
+    }
     .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
     .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; }
     .breadcrumb a:hover { color: rgba(255,255,255,0.75); }
@@ -149,6 +162,11 @@
       .opps-wrap { padding: 4rem 1.5rem 5rem; }
     }
     @media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; } }
+    .page-hero-content {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1200px;
+      margin: 0 auto; padding: 0 2.5rem 3.5rem;
+    }
   </style>
 </head>
 <body>
@@ -168,6 +186,8 @@
   </nav>
 
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Get Involved</span><span>/</span><span style="color:rgba(255,255,255,0.6)">Other Opportunities</span></div>
     <h1>Other Opportunities</h1>
     <p>More ways to make a tangible difference in the lives of children and communities in Sierra Leone.</p>
