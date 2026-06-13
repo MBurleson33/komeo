@@ -191,6 +191,7 @@
       min-height: 640px;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       overflow: hidden;
     }
 
@@ -206,6 +207,7 @@
     .hero-content {
       position: relative;
       z-index: 2;
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 2.5rem;
@@ -1396,9 +1398,12 @@
 
   <script>
     (function() {
-      const WEEK = 30 * 24 * 60 * 60 * 1000;
+      const MONTH = 30 * 24 * 60 * 60 * 1000;
       const last = localStorage.getItem('komeo_cookie_ok');
-      if (!last || (Date.now() - parseInt(last)) > WEEK) {
+      const lastNum = parseInt(last);
+      // Show if never dismissed, or if timestamp is old, but NOT if stored as '1' (old format)
+      const shouldShow = !last || (last !== '1' && !isNaN(lastNum) && (Date.now() - lastNum) > MONTH);
+      if (shouldShow) {
         document.getElementById('cookieNotice').style.display = 'flex';
       }
     })();
